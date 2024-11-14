@@ -32,12 +32,6 @@
             <Button x:Name="Settings" Content="⚙️" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
                     Foreground="#5856D6" Background="Transparent" BorderBrush="Transparent" Click="Settings_Click"/>
 
-            <!-- Beenden Button am unteren Rand -->
-            <StackPanel VerticalAlignment="Bottom">
-                <Button x:Name="ExitButton" Content="⛔" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                        Foreground="#FF3B30" Background="Transparent" BorderBrush="Transparent" Click="ExitButton_Click"/>
-            </StackPanel>
-
         </StackPanel>
     </Grid>
 </UserControl>

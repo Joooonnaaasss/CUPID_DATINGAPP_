@@ -70,10 +70,6 @@ namespace CUPID_DATINGAPP
             // Navigiere zum SearchFrame und zeige die UserSearch-Seite
             mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame); // Zeigt das SearchFrame an
         }
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
     }
 
 }
