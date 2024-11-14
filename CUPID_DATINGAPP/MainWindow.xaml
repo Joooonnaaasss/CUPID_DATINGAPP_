@@ -22,31 +22,37 @@
         <!-- Main grid with background and two columns for menu and main content -->
         <Grid Width="900" Height="450">
             <!-- Background with gradient over the entire grid -->
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFAD6FF"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
 
             <!-- Columns for dynamic layout -->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="0"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Main menu Frame, initially hidden -->
-            <Frame x:Name="MenuFrame" Grid.Column="1" HorizontalAlignment="Center"
-                   Visibility="Collapsed" NavigationUIVisibility="Hidden" Width="0">
+            <Frame x:Name="MenuFrame" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                   Visibility="Collapsed" NavigationUIVisibility="Hidden" Margin="0,0,10,0">
                 <Frame.Content>
                     <local:MainMenü />
                 </Frame.Content>
             </Frame>
 
             <!-- AccMenü Frame, initially hidden -->
-            <Frame x:Name="AccMenuFrame" Grid.Column="1" HorizontalAlignment="Center"
-                   Visibility="Collapsed" NavigationUIVisibility="Hidden" Width="0">
+            <Frame x:Name="AccMenuFrame" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                   Visibility="Collapsed" NavigationUIVisibility="Hidden" Margin="0,0,10,0">
                 <Frame.Content>
                     <local:AccMenü />
                 </Frame.Content>
             </Frame>
 
             <!-- Main content in the right column -->
-            <Grid Grid.Column="1" Background="White">
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
                 <!-- Frames for various content -->
                 <Frame x:Name="UserDataFrame" Visibility="Visible" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
                     <Frame.Content>
