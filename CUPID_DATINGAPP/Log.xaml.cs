@@ -27,7 +27,7 @@ namespace CUPID_DATINGAPP
         {
             if (UserTextBox.Text == "Benutzername")
             {
-                UserTextBox.Text = "";
+                UserTextBox.Text = ""; //fgh
                 UserTextBox.Foreground = new SolidColorBrush(Colors.Black); // Setze die Schriftfarbe auf schwarz
             }
         }

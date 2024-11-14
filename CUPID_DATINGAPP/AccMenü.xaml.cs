@@ -45,5 +45,12 @@ namespace CUPID_DATINGAPP
             mainWindow.UserDataFrame.Visibility = Visibility.Visible;
             mainWindow.UserDataFrame.Content = new UserData3();
         }
+
+        private void BackMenü(object sender, RoutedEventArgs e)
+        {
+            // Greife auf das Hauptfenster zu und setze den Inhalt auf UserData3
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.HomeFrame);
+        }
     }
 }

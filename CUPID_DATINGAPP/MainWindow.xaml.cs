@@ -71,9 +71,29 @@ namespace CUPID_DATINGAPP
             SearchFrameAdd.Visibility = Visibility.Collapsed;
             SearchFramePublic.Visibility = Visibility.Collapsed;
             HomeFrame.Visibility = Visibility.Collapsed;
+            AccMenuFrame.Visibility = Visibility.Collapsed;
 
             // MenuFrame bleibt sichtbar
             MenuFrame.Visibility = Visibility.Visible;
+
+            // Den gewünschten zweiten Frame sichtbar machen
+            frameToShow.Visibility = Visibility.Visible;
+        }
+
+        public void ShowFramesWithoutAccMenu(Frame frameToShow)
+        {
+            // Setze nur die anderen Frames auf Collapsed, nicht aber den MenuFrame
+            LogFrame.Visibility = Visibility.Collapsed;
+            RegistrierFrame.Visibility = Visibility.Collapsed;
+            UserDataFrame.Visibility = Visibility.Visible;
+            SettingsFrame.Visibility = Visibility.Collapsed;
+            SearchFrameAdd.Visibility = Visibility.Collapsed;
+            SearchFramePublic.Visibility = Visibility.Collapsed;
+            HomeFrame.Visibility = Visibility.Collapsed;
+            AccMenuFrame.Visibility = Visibility.Visible;
+
+            // MenuFrame bleibt sichtbar
+            MenuFrame.Visibility = Visibility.Collapsed;
 
             // Den gewünschten zweiten Frame sichtbar machen
             frameToShow.Visibility = Visibility.Visible;

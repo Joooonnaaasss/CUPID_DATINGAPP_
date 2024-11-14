@@ -40,9 +40,8 @@ namespace CUPID_DATINGAPP
 
             // Hole das Hauptfenster
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.AccMenuPopup.IsOpen = true;
             // Zeige den UserDataFrame und setze UserData1 als Inhalt
-            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.UserDataFrame);
+            mainWindow.ShowFramesWithoutAccMenu(mainWindow.UserDataFrame);
             mainWindow.UserDataFrame.Content = new UserData1();
         }
 
