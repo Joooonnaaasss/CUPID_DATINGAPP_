@@ -58,6 +58,9 @@
     <Compile Include="AccMenü.xaml.cs">
       <DependentUpon>AccMenü.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BenuzerAnzeige.xaml.cs">
+      <DependentUpon>BenuzerAnzeige.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
       <DependentUpon>UserSettings.xaml</DependentUpon>
     </Compile>
     <Page Include="AccMenü.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BenuzerAnzeige.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,13 +211,20 @@
   <ItemGroup>
     <Resource Include="Pictures\bahai.png" />
     <Resource Include="Pictures\benutzer-hinzufugen.png" />
-    <Resource Include="Pictures\Cupid Verlauf.png" />
     <Resource Include="Pictures\funkelt.png" />
     <Resource Include="Pictures\heim.png" />
     <Resource Include="Pictures\menu-burger.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\globus-schild.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Navigation-Menu-3-Alternate--Streamline-Ultimate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\UserIconda.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

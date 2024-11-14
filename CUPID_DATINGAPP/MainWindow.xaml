@@ -21,8 +21,6 @@
     <Viewbox Stretch="Uniform">
         <!-- Main grid with background and two columns for menu and main content -->
         <Grid Width="900" Height="450">
-            <!-- Set base dimensions for scaling -->
-
             <!-- Background with gradient over the entire grid -->
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -45,15 +43,13 @@
                 </Frame.Content>
             </Frame>
 
-            <!-- Popup for the Account Menu -->
-            <Popup x:Name="AccMenuPopup"
-                   Placement="Right"
-                   PlacementTarget="{Binding ElementName=MainGrid}"
-                   StaysOpen="False"
-                   AllowsTransparency="True"
-                   HorizontalOffset="-10">
-                <local:AccMenü />
-            </Popup>
+            <!-- AccMenü Frame, initially hidden -->
+            <Frame x:Name="AccMenuFrame" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                   Visibility="Collapsed" NavigationUIVisibility="Hidden" Margin="0,0,10,0">
+                <Frame.Content>
+                    <local:AccMenü />
+                </Frame.Content>
+            </Frame>
 
             <!-- Main content in the right column -->
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
