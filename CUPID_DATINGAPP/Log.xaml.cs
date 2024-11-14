@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySqlConnector;
+using System.Data.SqlClient;
 
 namespace CUPID_DATINGAPP
 {
@@ -61,12 +63,13 @@ namespace CUPID_DATINGAPP
         //---------------------------------------------------------------
         private void AnmeldenButton_Click(object sender, RoutedEventArgs e)
         {
-            
-
+            var con = new MySqlConnection(
+           "server=localhost;userid=root;password=Niviistcool123!;database=cupid");
 
             // Hier kannst du die Login-Logik hinzufügen
             string username = UserTextBox.Text;
             string password = PasswordBox.Text;
+
 
             // Beispielhafte Überprüfung der Anmeldedaten
             if (ValidateLogin(username, password))
@@ -80,6 +83,7 @@ namespace CUPID_DATINGAPP
                 // Zeige eine Fehlermeldung, wenn die Anmeldedaten falsch sind
                 MessageBox.Show("Benutzername oder Passwort ist falsch. Bitte versuchen Sie es erneut.", "Login Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
