@@ -18,8 +18,8 @@
                     <Border CornerRadius="15" Width="500" Height="300">
                         <Border.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFE8E9B9"/>
-                                <GradientStop Color="#FFFFE2FD" Offset="1"/>
+                                <GradientStop Color="white"/>
+                                <GradientStop Color="pink" Offset="1"/>
                                 <GradientStop Color="White" Offset="0.457"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -30,7 +30,7 @@
                             </Grid.RowDefinitions>
 
                             <!-- Profilbild -->
-                            <Border Height="130" CornerRadius="10" Background="Gray" 
+                            <Border Height="130" CornerRadius="10" Background="#EEB4B4"
                                     VerticalAlignment="Top" Margin="10,70,360,0" Grid.RowSpan="2">
                                 <!-- Bild kann hier eingefügt werden -->
                             </Border>
@@ -38,38 +38,38 @@
                             <!-- Profilinformationen -->
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="150,0,0,0" Width="280" Grid.RowSpan="2">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <TextBlock Text="Vorname" FontSize="18" FontWeight="Bold" Foreground="#333"/>
+                                    <TextBlock Text="Vorname" FontSize="18" FontWeight="Bold" Foreground="#CD8C95"/>
                                     <TextBlock Text=" " FontSize="18" FontWeight="Bold"/>
-                                    <TextBlock Text="Nachname" FontSize="18" FontWeight="Bold" Foreground="#333"/>
-                                    <TextBlock Text=", " FontSize="18" FontWeight="Bold"/>
-                                    <TextBlock Text="25" FontSize="18" FontWeight="Bold" Foreground="#333"/>
+                                    <TextBlock Text="Nachname" FontSize="18" FontWeight="Bold" Foreground="#CD8C95"/>
+                                    <TextBlock Text=", " FontSize="18" FontWeight="Bold" Foreground="#CD8C95"/>
+                                    <TextBlock Text="25" FontSize="18" FontWeight="Bold" Foreground="#CD8C95"/>
 
                                     <!-- Geschlecht -->
-                                    <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="5" Margin="10,0,0,0" Padding="5,2">
+                                    <Border BorderBrush="white" BorderThickness="1" CornerRadius="5" Margin="10,0,0,0" Padding="5,2">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                <GradientStop Color="#F0F0F0" Offset="0.0" />
-                                                <GradientStop Color="#D3D3D3" Offset="1.0" />
+                                                <GradientStop Color="#EEB4B4" Offset="0.0" />
+                                                <GradientStop Color="white" Offset="1.0" />
                                             </LinearGradientBrush>
                                         </Border.Background>
-                                        <TextBlock Text="Männlich" FontSize="14" Foreground="#555"/>
+                                        <TextBlock Text="Männlich" FontSize="14" Foreground="#CD919E"/>
                                     </Border>
                                 </StackPanel>
 
-                                <TextBlock Text="Über mich:" FontWeight="Bold" FontSize="16" Foreground="#333" Margin="0,10,0,2"/>
+                                <TextBlock Text="Über mich:" FontWeight="Bold" FontSize="16" Foreground="#CD8C95" Margin="0,10,0,2" FontFamily="Georgia, serif"/>
                                 <TextBlock x:Name="AboutMeText" Text="Hier steht eine kurze Beschreibung über die Person, die bis zu 200 Zeichen lang sein kann." 
-                                           TextWrapping="Wrap" Foreground="#555" Margin="0,0,0,10"/>
+                                           TextWrapping="Wrap" Foreground="#CD8C95" Margin="0,0,0,10"/>
 
-                                <TextBlock Text="Hobbys:" FontWeight="Bold" FontSize="16" Foreground="#333" Margin="0,5,0,2"/>
-                                <TextBlock x:Name="HobbiesText" Text="Lesen, Reisen, Musik" Foreground="#555" Margin="0,0,0,10"/>
+                                <TextBlock Text="Hobbys:" FontWeight="Bold" FontSize="16" Foreground="#CD8C95" Margin="0,5,0,2"/>
+                                <TextBlock x:Name="HobbiesText" Text="Lesen, Reisen, Musik" Foreground="#CD8C95" Margin="0,0,0,10"/>
 
-                                <TextBlock Text="Skills:" FontWeight="Bold" FontSize="16" Foreground="#333" Margin="0,5,0,2"/>
-                                <TextBlock x:Name="SkillsText" Text="Kommunikation, Kochen, Fotografie" Foreground="#555" Margin="0,0,0,10"/>
+                                <TextBlock Text="Skills:" FontWeight="Bold" FontSize="16" Foreground="#CD8C95" Margin="0,5,0,2"/>
+                                <TextBlock x:Name="SkillsText" Text="Kommunikation, Kochen, Fotografie" Foreground="#CD8C95" Margin="0,0,0,10"/>
                             </StackPanel>
 
                             <!-- Aktionen (Buttons) -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" Grid.Row="1">
-                                <Button Width="45" Height="45" Background="#FF6B6B" Foreground="White" FontSize="20" Content="❤️" 
+                                <Button Width="45" Height="45" Background="Transparent" Foreground="White" FontSize="30"
                                         BorderBrush="Transparent" Cursor="Hand" Margin="5,0">
                                     <Button.Template>
                                         <ControlTemplate TargetType="{x:Type Button}">
@@ -78,10 +78,10 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
+                                    <Image Height="32" Source="/Pictures/favourite.png" Stretch="Fill" Width="32"/>
                                 </Button>
-
-                                <Button Width="45" Height="45" Background="#CCCCCC" Foreground="White" FontSize="20" Content="❌" 
-                                        BorderBrush="Transparent" Cursor="Hand" Margin="5,0">
+                                <Button Width="45" Height="45" Background="Transparent" Foreground="White" FontSize="20" 
+                                        BorderBrush="Transparent" Cursor="Hand">
                                     <Button.Template>
                                         <ControlTemplate TargetType="{x:Type Button}">
                                             <Border Background="{TemplateBinding Background}" CornerRadius="22.5">
@@ -89,6 +89,7 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
+                                    <Image Height="32" Source="/Pictures/delete.png" Stretch="Fill" Width="32"/>
                                 </Button>
                             </StackPanel>
                         </Grid>

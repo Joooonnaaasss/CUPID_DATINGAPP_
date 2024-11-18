@@ -262,5 +262,14 @@
   <ItemGroup>
     <Resource Include="Pictures\UserIconda.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="love %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\favourite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

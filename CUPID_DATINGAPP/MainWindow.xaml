@@ -23,9 +23,9 @@
         <Grid Width="900" Height="450">
             <!-- Background with gradient over the entire grid -->
             <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFAD6FF"/>
-                    <GradientStop Color="White" Offset="1"/>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="Pink" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
 
@@ -53,8 +53,12 @@
 
             <!-- Main content in the right column -->
             <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="139*"/>
+                    <RowDefinition Height="311*"/>
+                </Grid.RowDefinitions>
                 <!-- Frames for various content -->
-                <Frame x:Name="UserDataFrame" Visibility="Visible" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="UserDataFrame" Visibility="Visible" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <StackPanel>
                             <local:UserData1 x:Name="UserData1Control" Visibility="Collapsed"/>
@@ -64,13 +68,13 @@
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="LogFrame" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="LogFrame" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <local:Log />
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="RegistrierFrame" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="RegistrierFrame" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <StackPanel>
                             <local:Reg x:Name="Reg1" Visibility="Collapsed"/>
@@ -80,25 +84,25 @@
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="SearchFrameAdd" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="SearchFrameAdd" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <local:UserSearch />
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="HomeFrame" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="HomeFrame" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <local:HomeWindow />
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="SettingsFrame" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="SettingsFrame" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <local:UserSettings />
                     </Frame.Content>
                 </Frame>
 
-                <Frame x:Name="SearchFramePublic" Visibility="Collapsed" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden">
+                <Frame x:Name="SearchFramePublic" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
                         <local:PublicSearch />
                     </Frame.Content>

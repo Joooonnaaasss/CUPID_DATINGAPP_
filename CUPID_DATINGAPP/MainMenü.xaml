@@ -6,31 +6,36 @@
              xmlns:local="clr-namespace:CUPID_DATINGAPP"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <!-- Hintergrund des Grids auf Transparent gesetzt -->
+    <!-- Hintergrund des Grids bleibt transparent -->
     <Grid Background="Transparent">
-        <!-- Seitenmenü auf der linken Seite mit weißem Hintergrund -->
-        <StackPanel Orientation="Vertical" Width="70" Background= "Pink" VerticalAlignment="Stretch" 
-                    HorizontalAlignment="Left">
+        <!-- Seitenmenü mit pink-weißem Farbverlauf -->
+        <StackPanel Orientation="Vertical" Width="70" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#EEB4B4" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
 
             <!-- Home Symbol -->
             <Button x:Name="Home" Content="🏠" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                    Foreground="#007AFF" Background="Transparent" BorderBrush="Transparent" Click="Home_Click"/>
+                    Foreground="black" Background="Transparent" BorderBrush="Transparent" Click="Home_Click"/>
 
             <!-- Nutzerprofil Symbol -->
             <Button x:Name="User" Content="👤" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                    Foreground="#FF2D55" Background="Transparent" BorderBrush="Transparent" Click="User_Click"/>
+                    Foreground="black"  Background="Transparent" BorderBrush="Transparent" Click="User_Click"/>
 
             <!-- Neues Entdecken Symbol -->
             <Button x:Name="Public" Content="✨" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                    Foreground="#FF9500" Background="Transparent" BorderBrush="Transparent" Click="Public_Click"/>
+                    Foreground="black" Background="Transparent" BorderBrush="Transparent" Click="Public_Click"/>
 
             <!-- Geaddete Leute Symbol -->
             <Button x:Name="Adds" Content="❤️" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                    Foreground="#34C759" Background="Transparent" BorderBrush="Transparent" Click="Button_Click"/>
+                    Foreground="black" Background="Transparent" BorderBrush="Transparent" Click="Button_Click"/>
 
             <!-- Einstellungen Symbol -->
             <Button x:Name="Settings" Content="⚙️" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center" 
-                    Foreground="#5856D6" Background="Transparent" BorderBrush="Transparent" Click="Settings_Click"/>
+                    Foreground="black" Background="Transparent" BorderBrush="Transparent" Click="Settings_Click"/>
 
         </StackPanel>
     </Grid>
