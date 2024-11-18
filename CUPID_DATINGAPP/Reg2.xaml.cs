@@ -20,7 +20,7 @@ namespace CUPID_DATINGAPP
 
         public Reg2(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
         {
-            registrationData = data;
+            registrationData = data; //Data
         }
 
         // Weiterleitung zu Reg3
