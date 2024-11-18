@@ -13,7 +13,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using MySqlConnector;
+using System.Data.SqlClient;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace CUPID_DATINGAPP
 {
@@ -27,7 +29,6 @@ namespace CUPID_DATINGAPP
             // Direkt beim Start den LogFrame anzeigen
             ShowFrame(LogFrame);
         }
-
 
         // Methode, um das Menü sichtbar zu machen
         public void ShowMenu()
@@ -73,7 +74,7 @@ namespace CUPID_DATINGAPP
             HomeFrame.Visibility = Visibility.Collapsed;
             AccMenuFrame.Visibility = Visibility.Collapsed;
 
-            // MenuFrame bleibt sichtbar
+            // MenuFrame bleibt sichtbarm
             MenuFrame.Visibility = Visibility.Visible;
 
             // Den gewünschten zweiten Frame sichtbar machen

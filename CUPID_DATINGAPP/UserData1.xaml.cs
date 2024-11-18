@@ -22,11 +22,11 @@ namespace CUPID_DATINGAPP
             InitializeComponent();
             this.DataContext = new UserDataModel
             {
-                Vorname = "Max",
-                Nachname = "Mustermann",
-                Email = "max.mustermann@example.com",
-                Geburtsdatum = "01.01.1990",
-                Geschlecht = "Männlich"
+                Vorname = "Luna",
+                Nachname = "Al Masri",
+                Email = "Luna.almasri@example.com",
+                Geburtsdatum = "05.11.2005",
+                Geschlecht = "Weiblich"
             };
         }
 
