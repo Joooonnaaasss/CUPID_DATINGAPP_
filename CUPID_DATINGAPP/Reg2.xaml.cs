@@ -1,44 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace CUPID_DATINGAPP
 {
-    /// <summary>
-    /// Interaktionslogik für Reg2.xaml
-    /// </summary>
     public partial class Reg2 : UserControl
     {
+        private Dictionary<string, string> registrationData;
+        private string photoPath = null;
+
+
         public Reg2()
         {
             InitializeComponent();
+            registrationData = new Dictionary<string, string>();
         }
 
-        // Event-Handler für den "Weiter"-Button
+        public Reg2(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
+        {
+            registrationData = data;
+        }
+
+        // Weiterleitung zu Reg3
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // Wechsel zu Reg1
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.RegistrierFrame.Content = new Reg3(); // Setzt Reg1 als neue Seite
+            if (ValidateInputs())
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+                // Lade Reg3 in den RegistrierFrame
+                mainWindow.RegistrierFrame.Content = new Reg3(registrationData); // Reg3 als Inhalt setzen
+
+                // Zeige den RegistrierFrame an
+                mainWindow.ShowFrame(mainWindow.RegistrierFrame);
+            }
         }
 
+
+        // Zurück zu Reg
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Wechsel zu Reg3
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.RegistrierFrame.Content = new Reg(); // Setzt Reg3 als neue Seite
+
+            // Lade Reg in den RegistrierFrame
+            mainWindow.RegistrierFrame.Content = new Reg(registrationData); // Reg als Inhalt setzen
+
+            // Zeige den RegistrierFrame an
+            mainWindow.ShowFrame(mainWindow.RegistrierFrame);
         }
-        // Weitere Event-Handler für andere Buttons können hier hinzugefügt werden.
+
+        // Foto hochladen
+        private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Bilder (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
+                Title = "Wählen Sie ein Profilbild aus"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                photoPath = openFileDialog.FileName;
+                MessageBox.Show("Foto erfolgreich hochgeladen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        // Eingabevalidierung
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
+            {
+                MessageBox.Show("Bitte geben Sie einen Benutzernamen ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (TargetAudienceComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Bitte wählen Sie eine Zielgruppe aus.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(BiographyTextBox.Text))
+            {
+                MessageBox.Show("Bitte geben Sie eine Biografie ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        
     }
 }

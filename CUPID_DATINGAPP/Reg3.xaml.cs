@@ -1,44 +1,84 @@
-﻿using System.Windows;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 
 namespace CUPID_DATINGAPP
 {
-    /// <summary>
-    /// Interaktionslogik für Reg3.xaml
-    /// </summary>
     public partial class Reg3 : UserControl
     {
+        private Dictionary<string, string> registrationData;
+
 
         public Reg3()
         {
             InitializeComponent();
+            registrationData = new Dictionary<string, string>();
         }
 
+        public Reg3(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
+        {
+            registrationData = data;
+        }
 
-        // Klick-Event für den "Fertigstellen"-Button
+        // Registrierung abschließen
         private void FinishRegistrationButton_Click(object sender, RoutedEventArgs e)
         {
-            // Abrufen des MainWindow, um auf die Frames zuzugreifen
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            try
+            {
+                // Daten in die Datenbank speichern (Code unverändert)
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
 
-            // RegistrierFrame ausblenden
-            mainWindow.RegistrierFrame.Visibility = Visibility.Collapsed;
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
 
-            // Seitenmenü anzeigen
-            mainWindow.MenuFrame.Visibility = Visibility.Visible;
+                    string query = @"INSERT INTO users 
+                             (FirstName, LastName, Email, DateOfBirth, Gender, Username, Biography, TargetAudience, profile_photo, Hobbies, Skills, Password) 
+                             VALUES 
+                             (@FirstName, @LastName, @Email, @DateOfBirth, @Gender, @Username, @Biography, @TargetAudience, @profile_photo, @Hobbies, @Skills, @Password)";
 
-            // Optional: Hier könnten weitere Einstellungen vorgenommen werden,
-            // falls der Benutzer z.B. zur Startseite oder zu einem anderen Bereich
-            // navigiert werden soll.
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        // Parameter setzen
+                        cmd.Parameters.AddWithValue("@FirstName", registrationData.ContainsKey("FirstName") ? registrationData["FirstName"] : "");
+                        cmd.Parameters.AddWithValue("@LastName", registrationData.ContainsKey("LastName") ? registrationData["LastName"] : "");
+                        cmd.Parameters.AddWithValue("@Email", registrationData.ContainsKey("Email") ? registrationData["Email"] : "");
+                        cmd.Parameters.AddWithValue("@DateOfBirth", registrationData.ContainsKey("DateOfBirth") ? registrationData["DateOfBirth"] : "");
+                        cmd.Parameters.AddWithValue("@Gender", registrationData.ContainsKey("Gender") ? registrationData["Gender"] : "");
+                        cmd.Parameters.AddWithValue("@Username", registrationData.ContainsKey("Username") ? registrationData["Username"] : "");
+                        cmd.Parameters.AddWithValue("@Biography", registrationData.ContainsKey("Biography") ? registrationData["Biography"] : "");
+                        cmd.Parameters.AddWithValue("@TargetAudience", registrationData.ContainsKey("TargetAudience") ? registrationData["TargetAudience"] : "");
+                        cmd.Parameters.AddWithValue("@profile_photo", registrationData.ContainsKey("profile_photo") ? registrationData["profile_photo"] : "");
+                        cmd.Parameters.AddWithValue("@Password", registrationData.ContainsKey("Password") ? registrationData["Password"] : "");
+
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Registrierung erfolgreich abgeschlossen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Zurück zur Login-Seite
+                        MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                        mainWindow.LogFrame.Content = new Log(); // Lade Login in den LogFrame
+                        mainWindow.ShowFrame(mainWindow.LogFrame); // Zeige LogFrame an
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Speichern der Registrierung: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        // Klick-Event für den "Zurück"-Button
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Zurück zum vorherigen Frame (Reg2)
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.ShowFrame(mainWindow.UserDataFrame); // Zeige das UserDataFrame an (Reg2)
+
+            // Lade Reg2 in den RegistrierFrame
+            mainWindow.RegistrierFrame.Content = new Reg2(registrationData); // Reg2 als Inhalt setzen
+
+            // Zeige den RegistrierFrame an
+            mainWindow.ShowFrame(mainWindow.RegistrierFrame);
         }
     }
 }
