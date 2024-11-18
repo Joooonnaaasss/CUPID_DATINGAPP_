@@ -23,9 +23,9 @@
         <Grid Width="900" Height="450">
             <!-- Background with gradient over the entire grid -->
             <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFAD6FF"/>
-                    <GradientStop Color="White" Offset="1"/>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="Pink" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
 
