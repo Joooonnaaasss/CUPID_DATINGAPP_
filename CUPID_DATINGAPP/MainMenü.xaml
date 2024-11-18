@@ -9,7 +9,7 @@
     <!-- Hintergrund des Grids auf Transparent gesetzt -->
     <Grid Background="Transparent">
         <!-- Seitenmenü auf der linken Seite mit weißem Hintergrund -->
-        <StackPanel Orientation="Vertical" Width="70" Background="#FFFFFF" VerticalAlignment="Stretch" 
+        <StackPanel Orientation="Vertical" Width="70" Background= "Pink" VerticalAlignment="Stretch" 
                     HorizontalAlignment="Left">
 
             <!-- Home Symbol -->
