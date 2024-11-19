@@ -42,13 +42,17 @@ namespace CUPID_DATINGAPP
         // Zurück zu Reg
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            var reg = new Reg(registrationData); // registrationData muss vorher definiert sein.
+
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            // Lade Reg in den RegistrierFrame
-            mainWindow.RegistrierFrame.Content = new Reg(registrationData); // Reg als Inhalt setzen
+            // Lade die Login-Seite in den LogFrame
+            mainWindow.RegistrierFrame.Content = new Reg(); // Log ist die Login-Oberfläche
 
-            // Zeige den RegistrierFrame an
+            // Zeige den LogFrame an
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
+
         }
 
         // Foto hochladen

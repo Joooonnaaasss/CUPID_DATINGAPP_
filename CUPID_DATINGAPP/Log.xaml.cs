@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySqlConnector;
 
+
 namespace CUPID_DATINGAPP // Namespace für die Anwendung
 {
     // Die Log-Klasse repräsentiert das Login-Steuerelement
