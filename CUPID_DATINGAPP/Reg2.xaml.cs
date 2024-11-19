@@ -20,7 +20,7 @@ namespace CUPID_DATINGAPP
 
         public Reg2(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
         {
-            registrationData = data;
+            registrationData = data; //Data
         }
 
         // Weiterleitung zu Reg3
@@ -42,13 +42,17 @@ namespace CUPID_DATINGAPP
         // Zurück zu Reg
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            var reg = new Reg(registrationData); // registrationData muss vorher definiert sein.
+
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            // Lade Reg in den RegistrierFrame
-            mainWindow.RegistrierFrame.Content = new Reg(registrationData); // Reg als Inhalt setzen
+            // Lade die Login-Seite in den LogFrame
+            mainWindow.RegistrierFrame.Content = new Reg(); // Log ist die Login-Oberfläche
 
-            // Zeige den RegistrierFrame an
+            // Zeige den LogFrame an
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
+
         }
 
         // Foto hochladen
@@ -88,6 +92,6 @@ namespace CUPID_DATINGAPP
 
             return true;
         }
-
+        
     }
 }

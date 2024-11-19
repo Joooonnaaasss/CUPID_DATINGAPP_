@@ -1,8 +1,9 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
+using MySqlConnector;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Configuration;
 
 namespace CUPID_DATINGAPP
 {

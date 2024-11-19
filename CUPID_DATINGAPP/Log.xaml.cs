@@ -1,9 +1,10 @@
-﻿using MySql.Data.MySqlClient; // Importiert die MySQL-Bibliothek für die Verbindung zur Datenbank
-using System; // Standardbibliothek für grundlegende Funktionen
-using System.Windows; // Bibliothek für WPF-Elemente
-using System.Windows.Controls; // WPF-Steuerelemente wie TextBox, Button, etc.
-using System.Windows.Input; // Ermöglicht das Arbeiten mit Eingabeereignissen wie Maus- und Tastatureingaben
-using System.Windows.Media; // Ermöglicht die Arbeit mit Farben und anderen grafischen Elementen
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using MySqlConnector;
+using System.Configuration;
 
 namespace CUPID_DATINGAPP // Namespace für die Anwendung
 {
@@ -63,19 +64,18 @@ namespace CUPID_DATINGAPP // Namespace für die Anwendung
         // Event-Handler für den Klick auf den Anmelden-Button
         private void AnmeldenButton_Click(object sender, RoutedEventArgs e)
         {
-            // Holt den eingegebenen Benutzernamen und das Passwort aus den TextBoxen
-            string username = UserTextBox.Text;
-            string password = PasswordBox.Text;
+            string username = UserTextBox.Text.Trim();
+            string password = PasswordBox.Text.Trim();
 
-            // Überprüft, ob die Eingabefelder leer sind
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            // Überprüfung, ob die Eingabefelder korrekt gefüllt sind
+            if (string.IsNullOrEmpty(username) || username == "Benutzername" ||
+                string.IsNullOrEmpty(password) || password == "Password")
             {
-                // Zeigt eine Warnung an, wenn Felder leer sind
-                MessageBox.Show("Bitte geben Sie einen Benutzernamen und ein Passwort ein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Bitte geben Sie Benutzername und Passwort ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Validiert die Anmeldedaten durch Abfrage der Datenbank
+            // Überprüfung der Anmeldedaten
             if (ValidateLogin(username, password))
             {
                 // Navigiert zur Hauptseite, wenn die Anmeldung erfolgreich ist
@@ -95,7 +95,12 @@ namespace CUPID_DATINGAPP // Namespace für die Anwendung
             try
             {
                 // Ruft die Verbindungszeichenfolge aus der App.config ab
-                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+                string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"]?.ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    MessageBox.Show("Verbindungszeichenfolge nicht gefunden. Überprüfen Sie die App.config.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
 
                 // Erstellt eine Verbindung zur MySQL-Datenbank
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -121,7 +126,7 @@ namespace CUPID_DATINGAPP // Namespace für die Anwendung
             catch (Exception ex)
             {
                 // Zeigt eine Fehlermeldung an, wenn ein Fehler auftritt
-                MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}\nDetails: {ex.StackTrace}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false; // Gibt false zurück, wenn ein Fehler auftritt
             }
         }
