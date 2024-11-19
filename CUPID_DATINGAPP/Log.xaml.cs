@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MySqlConnector;
-
+﻿using MySql.Data.MySqlClient; // Importiert die MySQL-Bibliothek für die Verbindung zur Datenbank
+using System; // Standardbibliothek für grundlegende Funktionen
+using System.Windows; // Bibliothek für WPF-Elemente
+using System.Windows.Controls; // WPF-Steuerelemente wie TextBox, Button, etc.
+using System.Windows.Input; // Ermöglicht das Arbeiten mit Eingabeereignissen wie Maus- und Tastatureingaben
+using System.Windows.Media; // Ermöglicht die Arbeit mit Farben und anderen grafischen Elementen
 
 namespace CUPID_DATINGAPP // Namespace für die Anwendung
 {
@@ -73,15 +63,19 @@ namespace CUPID_DATINGAPP // Namespace für die Anwendung
         // Event-Handler für den Klick auf den Anmelden-Button
         private void AnmeldenButton_Click(object sender, RoutedEventArgs e)
         {
-            var con = new MySqlConnection(
-           "server=localhost;userid=root;password=Niviistcool123!;database=cupid");
-
-            // Hier kannst du die Login-Logik hinzufügen
+            // Holt den eingegebenen Benutzernamen und das Passwort aus den TextBoxen
             string username = UserTextBox.Text;
             string password = PasswordBox.Text;
 
+            // Überprüft, ob die Eingabefelder leer sind
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                // Zeigt eine Warnung an, wenn Felder leer sind
+                MessageBox.Show("Bitte geben Sie einen Benutzernamen und ein Passwort ein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            // Beispielhafte Überprüfung der Anmeldedaten
+            // Validiert die Anmeldedaten durch Abfrage der Datenbank
             if (ValidateLogin(username, password))
             {
                 // Navigiert zur Hauptseite, wenn die Anmeldung erfolgreich ist
@@ -93,7 +87,6 @@ namespace CUPID_DATINGAPP // Namespace für die Anwendung
                 // Zeigt eine Fehlermeldung bei ungültigen Anmeldedaten
                 MessageBox.Show("Benutzername oder Passwort ist falsch. Bitte versuchen Sie es erneut.", "Login Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         // Methode zur Validierung der Anmeldedaten durch die Datenbank
