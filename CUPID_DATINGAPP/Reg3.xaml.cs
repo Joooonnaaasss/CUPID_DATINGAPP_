@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Configuration;
-using MySql.Data.MySqlClient;
 
 namespace CUPID_DATINGAPP
 {
