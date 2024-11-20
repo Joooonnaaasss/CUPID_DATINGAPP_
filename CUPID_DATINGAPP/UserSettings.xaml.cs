@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CUPID_DATINGAPP.UserSync;
 
 namespace CUPID_DATINGAPP
 {
@@ -31,6 +32,7 @@ namespace CUPID_DATINGAPP
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ShowFrame(mainWindow.LogFrame); // Zur Login-Seite wechseln
             MessageBox.Show("Sie wurden erfolgreich abgemeldet.", "Abmeldung", MessageBoxButton.OK, MessageBoxImage.Information);
+            CurrentUser.Instance.Reset();
         }
 
         // Event-Handler für den Account löschen Button

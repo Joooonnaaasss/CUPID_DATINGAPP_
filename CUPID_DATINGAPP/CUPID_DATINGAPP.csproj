@@ -124,6 +124,7 @@
     <Compile Include="UserSettings.xaml.cs">
       <DependentUpon>UserSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserSync.cs" />
     <Page Include="AccMenü.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

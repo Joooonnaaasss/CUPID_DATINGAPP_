@@ -48,7 +48,8 @@
                             Foreground="#333333" 
                             BorderThickness="0" 
                             Background="Transparent" 
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Click="UploadPhotoButton_Click"/>
                 </Border>
 
                 <!-- Biografie Input Box -->

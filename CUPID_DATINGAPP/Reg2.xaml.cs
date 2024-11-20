@@ -58,7 +58,8 @@ namespace CUPID_DATINGAPP
         // Foto hochladen
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            // OpenFileDialog to select a photo
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "Bilder (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
                 Title = "Wählen Sie ein Profilbild aus"
@@ -66,10 +67,15 @@ namespace CUPID_DATINGAPP
 
             if (openFileDialog.ShowDialog() == true)
             {
-                photoPath = openFileDialog.FileName;
-                MessageBox.Show("Foto erfolgreich hochgeladen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+                string photoPath = openFileDialog.FileName; // Speichere den Pfad
+                MessageBox.Show($"Foto erfolgreich hochgeladen: {photoPath}", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Kein Foto ausgewählt.", "Hinweis", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         // Eingabevalidierung
         private bool ValidateInputs()

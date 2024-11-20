@@ -11,7 +11,6 @@ namespace CUPID_DATINGAPP
     {
         private Dictionary<string, string> registrationData;
 
-
         public Reg3()
         {
             InitializeComponent();
@@ -28,17 +27,17 @@ namespace CUPID_DATINGAPP
         {
             try
             {
-                // Daten in die Datenbank speichern (Code unverändert)
-                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+                // Verbindung zur Datenbank herstellen
+                string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
 
                     string query = @"INSERT INTO users 
-                             (FirstName, LastName, Email, DateOfBirth, Gender, Username, Biography, TargetAudience, profile_photo, Hobbies, Skills, Password) 
+                             (FirstName, LastName, Email, DateOfBirth, Gender, Username, Biography, TargetAudience, profile_photo, Hobbys, Skills, Password) 
                              VALUES 
-                             (@FirstName, @LastName, @Email, @DateOfBirth, @Gender, @Username, @Biography, @TargetAudience, @profile_photo, @Hobbies, @Skills, @Password)";
+                             (@FirstName, @LastName, @Email, @DateOfBirth, @Gender, @Username, @Biography, @TargetAudience, @profile_photo, @Hobbys, @Skills, @Password)";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -53,8 +52,10 @@ namespace CUPID_DATINGAPP
                         cmd.Parameters.AddWithValue("@TargetAudience", registrationData.ContainsKey("TargetAudience") ? registrationData["TargetAudience"] : "");
                         cmd.Parameters.AddWithValue("@profile_photo", registrationData.ContainsKey("profile_photo") ? registrationData["profile_photo"] : "");
                         cmd.Parameters.AddWithValue("@Password", registrationData.ContainsKey("Password") ? registrationData["Password"] : "");
+                        cmd.Parameters.AddWithValue("@Hobbys", registrationData.ContainsKey("Hobbys") ? registrationData["Hobbys"] : ""); // Korrektur hier
+                        cmd.Parameters.AddWithValue("@Skills", registrationData.ContainsKey("Skills") ? registrationData["Skills"] : "");
 
-
+                        // SQL-Befehl ausführen
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Registrierung erfolgreich abgeschlossen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
 
