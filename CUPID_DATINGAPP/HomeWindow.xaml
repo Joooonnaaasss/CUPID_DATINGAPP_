@@ -59,15 +59,6 @@
                                             <TextBlock
                                     Width="65" Text="Männlich" FontSize="14" FontFamily="Georgia, serif" Foreground="#CD919E"/>
                                         </Border>
-                                        <Border BorderBrush="white" BorderThickness="1" CornerRadius="5" Padding="5,2">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                    <GradientStop Color="#EEB4B4" Offset="0.0" />
-                                                    <GradientStop Color="white" Offset="1.0" />
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock Text="Männlich" FontSize="14" Foreground="#CD919E" FontFamily="Georgia, serif" Width="65"/>
-                                        </Border>
                                     </StackPanel>
 
                                     <!-- Geschlecht -->

@@ -22,7 +22,7 @@
             <StackPanel Margin="15">
                 
                 <TextBlock FontSize="24" FontWeight="Bold" 
-                           Margin="0,0,0,20" Foreground="#333333"><Run Language="de-de" Text="Freundessuche" FontFamily="Georgia, serif"/></TextBlock>
+                           Margin="0,0,0,20" Foreground="#CD8C95"><Run Language="de-de" Text="Freundessuche" FontFamily="Georgia, serif"/></TextBlock>
 
                 <!-- TextBox für die Benutzersuche -->
                 <Border Background="#F7F7F7" BorderBrush="#EEB4B4" 

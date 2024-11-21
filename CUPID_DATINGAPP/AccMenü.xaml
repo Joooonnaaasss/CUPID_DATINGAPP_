@@ -17,19 +17,21 @@
 
             <!-- Back Button -->
             <Button x:Name="BackButton" Content="🔙" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center"
-                    Foreground="#C1D1E1" Background="Transparent" BorderBrush="Transparent" ToolTip="Back" Click="BackMenü"/>
+                    Foreground="#000000" Background="Transparent" BorderBrush="Transparent" ToolTip="Back" Click="BackMenü"/>
 
             <!-- Profile Edit Button -->
-            <Button x:Name="PublicButton" Content="📝" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center"
-                    Foreground="#FFDDC1" Background="Transparent" BorderBrush="Transparent" ToolTip="Profil bearbeiten" Click="ShowEditUserData"/>
+            <Button x:Name="PublicButton" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center"
+                    Foreground="#FFDDC1" Background="Transparent" BorderBrush="Transparent" ToolTip="Profil bearbeiten" Click="ShowEditUserData">
+                <Image Height="32" Source="/Pictures/user-edit (1).png" Stretch="Fill" Width="32"/>
+            </Button>
 
             <!-- Registration Details Button -->
             <Button x:Name="PrivateButton" Content="🔒" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center"
-                    Foreground="#C1E1C1" Background="Transparent" BorderBrush="Transparent" ToolTip="Registrierungsdetails" Click="ShowUserData2"/>
+                    Foreground="#000000" Background="Transparent" BorderBrush="Transparent" ToolTip="Registrierungsdetails" Click="ShowUserData2"/>
 
             <!-- Hobbies and Skills Button -->
             <Button x:Name="PreviewButton" Content="🎨" FontSize="28" Height="60" Width="60" Margin="5" HorizontalAlignment="Center"
-                    Foreground="#C1D1E1" Background="Transparent" BorderBrush="Transparent" ToolTip="Hobbys und Fähigkeiten" Click="ShowUserData3"/>
+                    Foreground="#000000" Background="Transparent" BorderBrush="Transparent" ToolTip="Hobbys und Fähigkeiten" Click="ShowUserData3"/>
 
         </StackPanel>
     </Grid>
