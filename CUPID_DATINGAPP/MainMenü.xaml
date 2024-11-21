@@ -13,7 +13,7 @@
             <StackPanel.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="Pink" Offset="1"/>
+                    <GradientStop Color="#EEB4B4" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
 

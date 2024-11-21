@@ -10,7 +10,7 @@
     <Grid Background="Transparent">
 
         <!-- Outer Border to encapsulate all controls -->
-        <Border BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="15" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border BorderBrush="#CD8C95" BorderThickness="1" CornerRadius="15" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel HorizontalAlignment="Center" Width="200">
 
                 <!-- Username Input Box with Subtle Border -->
@@ -18,7 +18,7 @@
                     <TextBox x:Name="UserTextBox" 
              Text="Benutzername" 
              Padding="10" 
-             FontFamily="Segoe UI" 
+             FontFamily="Georgia, serif" 
              FontSize="14" 
              Foreground="#999999" 
              BorderThickness="0" 
@@ -30,9 +30,9 @@
 
                 <Border Background="#F7F7F7" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
                     <TextBox x:Name="PasswordBox" 
-             Text="Password" 
+             Text="Passwort" 
              Padding="10" 
-             FontFamily="Segoe UI" 
+             FontFamily="Georgia, serif" 
              FontSize="14" 
              Foreground="#999999" 
              BorderThickness="0" 
@@ -43,10 +43,10 @@
                 </Border>
 
                 <!-- Login Button with Rounded Border -->
-                <Border Background="#007AFF" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5">
+                <Border Background="#EEB4B4" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5">
                     <Button x:Name="AnmeldenButton" 
                             Content="Anmelden" 
-                            FontFamily="Segoe UI" 
+                            FontFamily="Georgia, serif" 
                             FontSize="14" 
                             Foreground="White" 
                             BorderThickness="0" 
@@ -56,10 +56,10 @@
                 </Border>
 
                 <!-- Register Button with Rounded Border -->
-                <Border Background="#34C759" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5">
+                <Border Background="#CD9B9B" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5">
                     <Button x:Name="RegestrierungsButton" 
                             Content="Registrieren" 
-                            FontFamily="Segoe UI" 
+                            FontFamily="Georgia, serif" 
                             FontSize="14" 
                             Foreground="White" 
                             BorderThickness="0" 
@@ -73,8 +73,8 @@
                            HorizontalAlignment="Center" 
                            TextWrapping="Wrap" 
                            FontSize="12" 
-                           FontFamily="Segoe UI" 
-                           Foreground="#007AFF" 
+                           FontFamily="Georgia, serif" 
+                           Foreground="#CD8C95" 
                            MouseDown="PasswordForget"
                            Margin="0,10,0,0">
                     <Run Language="de-de" Text="Passwort vergessen"/>
