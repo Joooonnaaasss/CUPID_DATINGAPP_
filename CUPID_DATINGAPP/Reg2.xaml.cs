@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
 
 namespace CUPID_DATINGAPP
 {
     public partial class Reg2 : UserControl
     {
         private Dictionary<string, string> registrationData;
-        private string photoPath = null;
-
 
         public Reg2()
         {
@@ -18,47 +15,34 @@ namespace CUPID_DATINGAPP
             registrationData = new Dictionary<string, string>();
         }
 
-        public Reg2(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
+        public Reg2(Dictionary<string, string> data) : this()
         {
-            registrationData = data; //Data
+            registrationData = data ?? new Dictionary<string, string>();
         }
 
-        // Weiterleitung zu Reg3
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (ValidateInputs())
             {
+                registrationData["Username"] = UsernameTextBox.Text.Trim();
+                registrationData["Biography"] = BiographyTextBox.Text.Trim();
+                registrationData["TargetAudience"] = ((ComboBoxItem)TargetAudienceComboBox.SelectedItem).Content.ToString();
+
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-
-                // Lade Reg3 in den RegistrierFrame
-                mainWindow.RegistrierFrame.Content = new Reg3(registrationData); // Reg3 als Inhalt setzen
-
-                // Zeige den RegistrierFrame an
+                mainWindow.RegistrierFrame.Content = new Reg3(registrationData);
                 mainWindow.ShowFrame(mainWindow.RegistrierFrame);
             }
         }
 
-
-        // Zurück zu Reg
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            var reg = new Reg(registrationData); // registrationData muss vorher definiert sein.
-
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-
-            // Lade die Login-Seite in den LogFrame
-            mainWindow.RegistrierFrame.Content = new Reg(); // Log ist die Login-Oberfläche
-
-            // Zeige den LogFrame an
+            mainWindow.RegistrierFrame.Content = new Reg(registrationData);
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
-
         }
 
-        // Foto hochladen
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            // OpenFileDialog to select a photo
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "Bilder (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
@@ -67,7 +51,8 @@ namespace CUPID_DATINGAPP
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string photoPath = openFileDialog.FileName; // Speichere den Pfad
+                string photoPath = openFileDialog.FileName;
+                registrationData["profile_photo"] = photoPath;
                 MessageBox.Show($"Foto erfolgreich hochgeladen: {photoPath}", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
@@ -76,8 +61,6 @@ namespace CUPID_DATINGAPP
             }
         }
 
-
-        // Eingabevalidierung
         private bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
@@ -98,6 +81,5 @@ namespace CUPID_DATINGAPP
 
             return true;
         }
-        
     }
 }

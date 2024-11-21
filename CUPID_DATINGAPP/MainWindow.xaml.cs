@@ -41,13 +41,13 @@ namespace CUPID_DATINGAPP
         {
             // Alle Frames ausblenden
             HomeFrame.Visibility = Visibility.Collapsed;
-            Reg1.Visibility = Visibility.Collapsed;
             LogFrame.Visibility = Visibility.Collapsed;
             UserDataFrame.Visibility = Visibility.Collapsed;
             SettingsFrame.Visibility = Visibility.Collapsed;
             SearchFrameAdd.Visibility = Visibility.Collapsed;
             SearchFramePublic.Visibility = Visibility.Collapsed;
             MenuFrame.Visibility = Visibility.Collapsed;
+            RegistrierFrame.Visibility = Visibility.Collapsed;
 
             // Den gewünschten Frame anzeigen
             frameToShow.Visibility = Visibility.Visible;

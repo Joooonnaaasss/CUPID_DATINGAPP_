@@ -38,7 +38,7 @@ namespace CUPID_DATINGAPP
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (PasswordBox.Text == "Password")
+            if (PasswordBox.Text == "Passwort")
             {
                 PasswordBox.Text = "";
                 PasswordBox.Foreground = new SolidColorBrush(Colors.Black);
@@ -49,7 +49,7 @@ namespace CUPID_DATINGAPP
         {
             if (string.IsNullOrWhiteSpace(PasswordBox.Text))
             {
-                PasswordBox.Text = "Password";
+                PasswordBox.Text = "Passwort";
                 PasswordBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
             }
         }
