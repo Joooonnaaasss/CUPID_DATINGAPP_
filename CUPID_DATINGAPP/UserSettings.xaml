@@ -13,16 +13,22 @@
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,20">
                 <!-- Titel des Einstellungsmenüs -->
-                <TextBlock Text="Einstellungen" FontSize="28" FontWeight="Bold" Foreground="#333333" 
+                <TextBlock Text="Einstellungen" FontSize="28" FontWeight="Bold" Foreground="#CD8C95" FontFamily="Georgia, serif"
                            HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
                 <!-- Account-Optionen -->
-                <Border Background="White" CornerRadius="10" Margin="0,10,0,10" Padding="15">
+                <Border CornerRadius="10" Margin="0,10,0,10" Padding="15">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="White" Offset="0"/>
+                            <GradientStop Color="#EEB4B4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <StackPanel>
-                        <TextBlock Text="Account" FontSize="18" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,10"/>
+                        <TextBlock Text="Account" FontSize="18" FontWeight="Bold" Foreground="#CD8C95" Margin="0,0,0,10" FontFamily="Georgia, serif"/>
 
                         <!-- Abmelden Button -->
-                        <Button Content="Abmelden" Width="250" Height="45" Background="#FF3B30" Foreground="White" FontSize="16" 
+                        <Button Content="Abmelden" Width="250" Height="45" Background="#EEB4B4" Foreground="White" FontSize="16" FontFamily="Georgia, serif"
                                 BorderBrush="Transparent" Cursor="Hand" Margin="0,10,0,0" Click="LogoutButton_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">
@@ -34,7 +40,7 @@
                         </Button>
 
                         <!-- Account löschen Button -->
-                        <Button Content="Account löschen" Width="250" Height="45" Background="#FF3B30" Foreground="White" FontSize="16" 
+                        <Button Content="Account löschen" Width="250" Height="45" Background="#CD9B9B" Foreground="White" FontSize="16" FontFamily="Georgia, serif"
                                 BorderBrush="Transparent" Cursor="Hand" Margin="0,10,0,0" Click="DeleteAccountButton_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">
@@ -46,7 +52,7 @@
                         </Button>
 
                         <!-- Passwort wiederherstellen Button -->
-                        <Button Content="Passwort wiederherstellen" Width="250" Height="45" Background="#007AFF" Foreground="White" FontSize="16" 
+                        <Button Content="Passwort wiederherstellen" Width="250" Height="45" Background="#8B5F65" Foreground="White" FontSize="16" FontFamily="Georgia, serif"
                                 BorderBrush="Transparent" Cursor="Hand" Margin="0,10,0,0" Click="ResetPasswordButton_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">

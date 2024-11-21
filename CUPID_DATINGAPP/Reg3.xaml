@@ -7,15 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border BorderBrush="#D1D1D6" BorderThickness="1" CornerRadius="12" Padding="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border BorderBrush="#EEB4B4" BorderThickness="1" CornerRadius="12" Padding="15" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel HorizontalAlignment="Center" Width="260">
 
                 <!-- Hobbies Input Box -->
-                <Border CornerRadius="8" Width="260" Height="60" BorderThickness="1" BorderBrush="#D1D1D6" Margin="0,5,0,5">
+                <Border CornerRadius="8" Width="260" Height="60" BorderThickness="1" BorderBrush="#EEB4B4" Margin="0,5,0,5">
                     <TextBox x:Name="HobbiesTextBox" 
                              Text="Hobbys" 
                              Padding="10,8" 
-                             FontFamily="Segoe UI" 
+                             FontFamily="Georgia, serif"
                              FontSize="13" 
                              Foreground="#3A3A3C" 
                              Background="White" 
@@ -26,11 +26,11 @@
                 </Border>
 
                 <!-- Skills Input Box -->
-                <Border CornerRadius="8" Width="260" Height="60" BorderThickness="1" BorderBrush="#D1D1D6" Margin="0,5,0,5">
+                <Border CornerRadius="8" Width="260" Height="60" BorderThickness="1" BorderBrush="#EEB4B4" Margin="0,5,0,5">
                     <TextBox x:Name="SkillsTextBox" 
                              Text="Fähigkeiten (Skills)" 
                              Padding="10,8" 
-                             FontFamily="Segoe UI" 
+                             FontFamily="Georgia, serif" 
                              FontSize="13" 
                              Foreground="#3A3A3C" 
                              Background="White" 
@@ -41,10 +41,10 @@
                 </Border>
 
                 <!-- Registrierung Button -->
-                <Border Background="#007AFF" CornerRadius="8" Width="260" Height="35" Margin="0,10,0,5">
+                <Border Background="#EEB4B4" CornerRadius="8" Width="260" Height="35" Margin="0,10,0,5">
                     <Button x:Name="FinishRegistrationButton" 
                             Content="Registrierung abschließen" 
-                            FontFamily="Segoe UI" 
+                            FontFamily="Georgia, serif" 
                             FontSize="13" 
                             Foreground="White" 
                             BorderThickness="0" 
@@ -54,10 +54,10 @@
                 </Border>
 
                 <!-- Zurück Button -->
-                <Border Background="#34C759" CornerRadius="8" Width="260" Height="35" Margin="0,5,0,5">
+                <Border Background="#CD9B9B" CornerRadius="8" Width="260" Height="35" Margin="0,5,0,5">
                     <Button x:Name="BackButton" 
                             Content="Zurück" 
-                            FontFamily="Segoe UI" 
+                            FontFamily="Georgia, serif"
                             FontSize="13" 
                             Foreground="White" 
                             BorderThickness="0" 
