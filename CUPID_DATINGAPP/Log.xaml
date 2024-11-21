@@ -30,7 +30,7 @@
 
                 <Border Background="#F7F7F7" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
                     <TextBox x:Name="PasswordBox" 
-             Text="Passwort" 
+             Text="Passwort"
              Padding="10" 
              FontFamily="Georgia, serif" 
              FontSize="14" 

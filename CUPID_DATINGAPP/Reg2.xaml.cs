@@ -25,7 +25,7 @@ namespace CUPID_DATINGAPP
             if (ValidateInputs())
             {
                 registrationData["Username"] = UsernameTextBox.Text.Trim();
-                registrationData["Biography"] = BiographyTextBox.Text.Trim();
+                registrationData["Password"] = PasswordBox.Password.Trim();
                 registrationData["TargetAudience"] = ((ComboBoxItem)TargetAudienceComboBox.SelectedItem).Content.ToString();
 
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -73,9 +73,9 @@ namespace CUPID_DATINGAPP
                 MessageBox.Show("Bitte wählen Sie eine Zielgruppe aus.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(BiographyTextBox.Text))
+            if (string.IsNullOrWhiteSpace(PasswordBox.Password)) // Geändert: Validierung für Passwort
             {
-                MessageBox.Show("Bitte geben Sie eine Biografie ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Bitte geben Sie ein Passwort ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
 

@@ -17,7 +17,7 @@ namespace CUPID_DATINGAPP
             registrationData = new Dictionary<string, string>();
         }
 
-        public Reg3(Dictionary<string, string> data) : this() // Aufruf des parameterlosen Konstruktors
+        public Reg3(Dictionary<string, string> data) : this() // Konstruktor mit Parameter
         {
             registrationData = data;
         }
@@ -25,54 +25,67 @@ namespace CUPID_DATINGAPP
         // Registrierung abschließen
         private void FinishRegistrationButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            // Prüfe, ob die Eingaben gültig sind
+            if (ValidateInputs())
             {
-                // Verbindung zur Datenbank herstellen
-                string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+                // Daten aus TextBoxen in das Dictionary übernehmen
+                registrationData["Biography"] = BiographyTextBox.Text.Trim();
+                registrationData["Hobbys"] = HobbysTextBox.Text.Trim();
+                registrationData["Skills"] = SkillsTextBox.Text.Trim();
 
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
+                    // Verbindung zur Datenbank herstellen
+                    string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
 
-                    string query = @"INSERT INTO users 
-                             (FirstName, LastName, Email, DateOfBirth, Gender, Username, Biography, TargetAudience, profile_photo, Hobbys, Skills, Password) 
-                             VALUES 
-                             (@FirstName, @LastName, @Email, @DateOfBirth, @Gender, @Username, @Biography, @TargetAudience, @profile_photo, @Hobbys, @Skills, @Password)";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        // Parameter setzen
-                        cmd.Parameters.AddWithValue("@FirstName", registrationData.ContainsKey("FirstName") ? registrationData["FirstName"] : "");
-                        cmd.Parameters.AddWithValue("@LastName", registrationData.ContainsKey("LastName") ? registrationData["LastName"] : "");
-                        cmd.Parameters.AddWithValue("@Email", registrationData.ContainsKey("Email") ? registrationData["Email"] : "");
-                        cmd.Parameters.AddWithValue("@DateOfBirth", registrationData.ContainsKey("DateOfBirth") ? registrationData["DateOfBirth"] : "");
-                        cmd.Parameters.AddWithValue("@Gender", registrationData.ContainsKey("Gender") ? registrationData["Gender"] : "");
-                        cmd.Parameters.AddWithValue("@Username", registrationData.ContainsKey("Username") ? registrationData["Username"] : "");
-                        cmd.Parameters.AddWithValue("@Biography", registrationData.ContainsKey("Biography") ? registrationData["Biography"] : "");
-                        cmd.Parameters.AddWithValue("@TargetAudience", registrationData.ContainsKey("TargetAudience") ? registrationData["TargetAudience"] : "");
-                        cmd.Parameters.AddWithValue("@profile_photo", registrationData.ContainsKey("profile_photo") ? registrationData["profile_photo"] : "");
-                        cmd.Parameters.AddWithValue("@Password", registrationData.ContainsKey("Password") ? registrationData["Password"] : "");
-                        cmd.Parameters.AddWithValue("@Hobbys", registrationData.ContainsKey("Hobbys") ? registrationData["Hobbys"] : ""); // Korrektur hier
-                        cmd.Parameters.AddWithValue("@Skills", registrationData.ContainsKey("Skills") ? registrationData["Skills"] : "");
+                        connection.Open();
 
-                        // SQL-Befehl ausführen
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Registrierung erfolgreich abgeschlossen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+                        string query = @"INSERT INTO users 
+                                         (FirstName, LastName, Email, DateOfBirth, Gender, Username, Biography, TargetAudience, profile_photo, Hobbys, Skills, Password) 
+                                         VALUES 
+                                         (@FirstName, @LastName, @Email, @DateOfBirth, @Gender, @Username, @Biography, @TargetAudience, @profile_photo, @Hobbys, @Skills, @Password)";
 
-                        // Zurück zur Login-Seite
-                        MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                        mainWindow.LogFrame.Content = new Log(); // Lade Login in den LogFrame
-                        mainWindow.ShowFrame(mainWindow.LogFrame); // Zeige LogFrame an
+                        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                        {
+                            // Parameter setzen
+                            cmd.Parameters.AddWithValue("@FirstName", registrationData.ContainsKey("FirstName") ? registrationData["FirstName"] : "");
+                            cmd.Parameters.AddWithValue("@LastName", registrationData.ContainsKey("LastName") ? registrationData["LastName"] : "");
+                            cmd.Parameters.AddWithValue("@Email", registrationData.ContainsKey("Email") ? registrationData["Email"] : "");
+                            cmd.Parameters.AddWithValue("@DateOfBirth", registrationData.ContainsKey("DateOfBirth") ? registrationData["DateOfBirth"] : "");
+                            cmd.Parameters.AddWithValue("@Gender", registrationData.ContainsKey("Gender") ? registrationData["Gender"] : "");
+                            cmd.Parameters.AddWithValue("@Username", registrationData.ContainsKey("Username") ? registrationData["Username"] : "");
+                            cmd.Parameters.AddWithValue("@Biography", registrationData.ContainsKey("Biography") ? registrationData["Biography"] : "");
+                            cmd.Parameters.AddWithValue("@TargetAudience", registrationData.ContainsKey("TargetAudience") ? registrationData["TargetAudience"] : "");
+                            cmd.Parameters.AddWithValue("@profile_photo", registrationData.ContainsKey("profile_photo") ? registrationData["profile_photo"] : "");
+                            cmd.Parameters.AddWithValue("@Password", registrationData.ContainsKey("Password") ? registrationData["Password"] : "");
+                            cmd.Parameters.AddWithValue("@Hobbys", registrationData.ContainsKey("Hobbys") ? registrationData["Hobbys"] : "");
+                            cmd.Parameters.AddWithValue("@Skills", registrationData.ContainsKey("Skills") ? registrationData["Skills"] : "");
+
+                            // SQL-Befehl ausführen
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Registrierung erfolgreich abgeschlossen!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            // Zurück zur Login-Seite
+                            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                            mainWindow.LogFrame.Content = new Log(); // Lade Login in den LogFrame
+                            mainWindow.ShowFrame(mainWindow.LogFrame); // Zeige LogFrame an
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Speichern der Registrierung: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show($"Fehler bei der Verbindung zur Datenbank: {ex.Message}", "Datenbankfehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
-
+        // Zurück-Button
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -82,6 +95,46 @@ namespace CUPID_DATINGAPP
 
             // Zeige den RegistrierFrame an
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
+        }
+
+        // Eingabevalidierung
+        private bool ValidateInputs()
+        {
+            // Überprüfe, ob Biografie länger als 200 Zeichen ist
+            if (BiographyTextBox.Text.Trim().Length > 200)
+            {
+                MessageBox.Show("Die Biografie darf maximal 200 Zeichen lang sein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            // Überprüfe, ob Pflichtfelder ausgefüllt sind
+            if (string.IsNullOrWhiteSpace(HobbysTextBox.Text) || HobbysTextBox.Text.Trim() == "Hobbys")
+            {
+                MessageBox.Show("Bitte geben Sie Ihre Hobbys ein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(SkillsTextBox.Text) || SkillsTextBox.Text.Trim() == "Fähigkeiten (Skills)")
+            {
+                MessageBox.Show("Bitte geben Sie Ihre Fähigkeiten ein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(BiographyTextBox.Text) || BiographyTextBox.Text.Trim() == "Biografie")
+            {
+                MessageBox.Show("Bitte geben Sie Ihre Biografie ein.", "Eingabefehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        // TextChanged-Handler für die HobbysTextBox (falls benötigt)
+        private void HobbysTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            // Optional: Textänderungen loggen
+            var textBox = sender as TextBox;
+            Console.WriteLine($"Hobbys Text geändert: {textBox?.Text}");
         }
     }
 }
