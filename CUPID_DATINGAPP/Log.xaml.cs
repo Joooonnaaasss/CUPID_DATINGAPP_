@@ -1,149 +1,187 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MySqlConnector;
+using System.Configuration;
+using static CUPID_DATINGAPP.UserSync;
 
-namespace CUPID_DATINGAPP // Namespace für die Anwendung
+namespace CUPID_DATINGAPP
 {
-    // Die Log-Klasse repräsentiert das Login-Steuerelement
     public partial class Log : UserControl
     {
-        // Konstruktor: Initialisiert das Login-Steuerelement
+        private int loggedInUserId = -1; // Globale Variable für die eingeloggte Benutzer-ID
+
         public Log()
         {
-            InitializeComponent(); // Lädt die zugehörige XAML-Datei und initialisiert die UI-Komponenten
+            InitializeComponent();
         }
 
-        // Event-Handler für das Fokussieren der Benutzername-TextBox
         private void UserTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Entfernt den Platzhaltertext, wenn der Benutzer die TextBox fokussiert
             if (UserTextBox.Text == "Benutzername")
             {
-                UserTextBox.Text = ""; // Leert die TextBox
-                UserTextBox.Foreground = new SolidColorBrush(Colors.Black); // Setzt die Schriftfarbe auf Schwarz
+                UserTextBox.Text = "";
+                UserTextBox.Foreground = new SolidColorBrush(Colors.Black);
             }
         }
 
-        // Event-Handler für das Verlassen des Fokus in der Benutzername-TextBox
         private void UserTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            // Setzt den Platzhalter zurück, wenn die TextBox leer ist
             if (string.IsNullOrWhiteSpace(UserTextBox.Text))
             {
-                UserTextBox.Text = "Benutzername"; // Setzt den Platzhaltertext
-                UserTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153)); // Setzt die Schriftfarbe auf Grau
+                UserTextBox.Text = "Benutzername";
+                UserTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
             }
         }
 
-        // Event-Handler für das Fokussieren der Passwort-TextBox
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Entfernt den Platzhaltertext, wenn der Benutzer die TextBox fokussiert
             if (PasswordBox.Text == "Password")
             {
-                PasswordBox.Text = ""; // Leert die TextBox
-                PasswordBox.Foreground = new SolidColorBrush(Colors.Black); // Setzt die Schriftfarbe auf Schwarz
+                PasswordBox.Text = "";
+                PasswordBox.Foreground = new SolidColorBrush(Colors.Black);
             }
         }
 
-        // Event-Handler für das Verlassen des Fokus in der Passwort-TextBox
         private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            // Setzt den Platzhalter zurück, wenn die TextBox leer ist
             if (string.IsNullOrWhiteSpace(PasswordBox.Text))
             {
-                PasswordBox.Text = "Password"; // Setzt den Platzhaltertext
-                PasswordBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153)); // Setzt die Schriftfarbe auf Grau
+                PasswordBox.Text = "Password";
+                PasswordBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
             }
         }
 
-        // Event-Handler für den Klick auf den Anmelden-Button
         private void AnmeldenButton_Click(object sender, RoutedEventArgs e)
         {
-            var con = new MySqlConnection(
-           "server=localhost;userid=root;password=Niviistcool123!;database=cupid");
+            string username = UserTextBox.Text.Trim();
+            string password = PasswordBox.Text.Trim();
 
-            // Hier kannst du die Login-Logik hinzufügen
-            string username = UserTextBox.Text;
-            string password = PasswordBox.Text;
+            if (string.IsNullOrEmpty(username) || username == "Benutzername" ||
+                string.IsNullOrEmpty(password) || password == "Password")
+            {
+                MessageBox.Show("Bitte geben Sie Benutzername und Passwort ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-
-            // Beispielhafte Überprüfung der Anmeldedaten
             if (ValidateLogin(username, password))
             {
-                // Navigiert zur Hauptseite, wenn die Anmeldung erfolgreich ist
+                LoadUserData(); // Passende Benutzerdaten laden
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
                 mainWindow.ShowFrame(mainWindow.MenuFrame);
             }
             else
             {
-                // Zeigt eine Fehlermeldung bei ungültigen Anmeldedaten
                 MessageBox.Show("Benutzername oder Passwort ist falsch. Bitte versuchen Sie es erneut.", "Login Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
-        // Methode zur Validierung der Anmeldedaten durch die Datenbank
-        private bool ValidateLogin(string username, string password)
+        private void LoadUserData()
         {
             try
             {
-                // Ruft die Verbindungszeichenfolge aus der App.config ab
-                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+                string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"]?.ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    MessageBox.Show("Verbindungszeichenfolge nicht gefunden. Überprüfen Sie die App.config.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                // Erstellt eine Verbindung zur MySQL-Datenbank
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    connection.Open(); // Öffnet die Verbindung
+                    connection.Open();
 
-                    // SQL-Abfrage zur Überprüfung der Benutzerdaten
-                    string query = "SELECT COUNT(*) FROM users WHERE Username = @Username AND Password = @Password";
+                    string query = @"
+                        SELECT 
+                            FirstName, LastName, Email, DateOfBirth, Gender, 
+                            Username, Biography, TargetAudience, profile_photo, 
+                            Hobbys, Skills 
+                        FROM users 
+                        WHERE UserID = @UserId";
 
-                    // Erstellt einen SQL-Befehl mit der Abfrage
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
-                        // Fügt Parameter hinzu, um SQL-Injection zu verhindern
-                        cmd.Parameters.AddWithValue("@Username", username);
-                        cmd.Parameters.AddWithValue("@Password", password);
+                        cmd.Parameters.AddWithValue("@UserId", loggedInUserId);
 
-                        // Führt die Abfrage aus und holt die Anzahl der passenden Datensätze
-                        int userCount = Convert.ToInt32(cmd.ExecuteScalar());
-                        return userCount > 0; // Gibt true zurück, wenn ein Benutzer gefunden wurde
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                CurrentUser.Instance.UserId = loggedInUserId;
+                                CurrentUser.Instance.FirstName = reader.GetString("FirstName");
+                                CurrentUser.Instance.LastName = reader.GetString("LastName");
+                                CurrentUser.Instance.Email = reader.GetString("Email");
+                                CurrentUser.Instance.DateOfBirth = reader.GetDateTime("DateOfBirth");
+                                CurrentUser.Instance.Gender = reader.GetString("Gender");
+                                CurrentUser.Instance.Username = reader.GetString("Username");
+                                CurrentUser.Instance.Biography = reader.IsDBNull(reader.GetOrdinal("Biography")) ? null : reader.GetString("Biography");
+                                CurrentUser.Instance.TargetAudience = reader.IsDBNull(reader.GetOrdinal("TargetAudience")) ? null : reader.GetString("TargetAudience");
+                                CurrentUser.Instance.ProfilePhoto = reader.IsDBNull(reader.GetOrdinal("profile_photo")) ? null : (byte[])reader["profile_photo"];
+                                CurrentUser.Instance.Hobbys = reader.IsDBNull(reader.GetOrdinal("Hobbys")) ? string.Empty : reader.GetString("Hobbys");
+                                CurrentUser.Instance.Skills = reader.IsDBNull(reader.GetOrdinal("Skills")) ? string.Empty : reader.GetString("Skills");
+                            }
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Zeigt eine Fehlermeldung an, wenn ein Fehler auftritt
-                MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false; // Gibt false zurück, wenn ein Fehler auftritt
+                MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}\nDetails: {ex.StackTrace}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Event-Handler für den Registrierungs-Button
+        private bool ValidateLogin(string username, string password)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"]?.ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    MessageBox.Show("Verbindungszeichenfolge nicht gefunden. Überprüfen Sie die App.config.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT UserID FROM users WHERE Username = @Username AND Password = @Password";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Password", password);
+
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            loggedInUserId = Convert.ToInt32(result);
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}\nDetails: {ex.StackTrace}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Navigiert zur Registrierungsseite
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
         }
 
-        // Event-Handler für den "Passwort vergessen"-Link
         private void PasswordForget(object sender, MouseButtonEventArgs e)
         {
-            // Zeigt eine Info-Box für das Zurücksetzen des Passworts
             MessageBox.Show("Bitte kontaktieren Sie den Support, um Ihr Passwort zurückzusetzen.", "Passwort vergessen", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }

@@ -15,7 +15,7 @@
                 <!-- Username Input Box -->
                 <Border Background="#F7F7F7" CornerRadius="8" Width="250" Height="35" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
                     <TextBox x:Name="UsernameTextBox" 
-                             Text="Benutzername" 
+                             Text="{Binding Benutzername}" 
                              Padding="8" 
                              FontFamily="Segoe UI" 
                              FontSize="13" 
@@ -27,6 +27,7 @@
                 <!-- Zielgruppe ComboBox -->
                 <Border Background="#F7F7F7" CornerRadius="8" Width="250" Height="35" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
                     <ComboBox x:Name="TargetAudienceComboBox" 
+                              SelectedValue="{Binding Zielgruppe}" 
                               Padding="8" 
                               FontFamily="Segoe UI" 
                               FontSize="13" 
@@ -54,7 +55,7 @@
                 <!-- Biografie Input Box -->
                 <Border Background="#F7F7F7" CornerRadius="8" Width="250" Height="70" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">
                     <TextBox x:Name="BiographyTextBox" 
-                             Text="Biografie" 
+                             Text="{Binding Biografie}" 
                              Padding="8" 
                              FontFamily="Segoe UI" 
                              FontSize="13" 
