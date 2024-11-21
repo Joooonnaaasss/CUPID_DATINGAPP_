@@ -11,18 +11,26 @@
         </Grid.ColumnDefinitions>
 
         <!-- Seitenmenü -->
-        <Border Grid.Column="0" Margin="10,10,10,10" Background="#FFFFFF" CornerRadius="15" 
-                BorderBrush="#E0E0E0" BorderThickness="1" >
+        <Border Grid.Column="0" Margin="10,10,10,10" CornerRadius="15" 
+                BorderBrush="#EEB4B4" BorderThickness="1" >
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#EEB4B4" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel Margin="15">
+                
                 <TextBlock FontSize="24" FontWeight="Bold" 
-                           Margin="0,0,0,20" Foreground="#333333"><Run Language="de-de" Text="Freundessuche"/></TextBlock>
+                           Margin="0,0,0,20" Foreground="#333333"><Run Language="de-de" Text="Freundessuche" FontFamily="Georgia, serif"/></TextBlock>
 
                 <!-- TextBox für die Benutzersuche -->
-                <Border Background="#F7F7F7" BorderBrush="#DDDDDD" 
+                <Border Background="#F7F7F7" BorderBrush="#EEB4B4" 
                         BorderThickness="1" CornerRadius="10">
                     <TextBox x:Name="SearchTextBox" Margin="0" 
                              TextChanged="SearchTextBox_TextChanged" 
                              Padding="10" 
+                             FontFamily="Georgia, serif"
                              FontSize="14" 
                              Foreground="#333333"/>
                 </Border>
