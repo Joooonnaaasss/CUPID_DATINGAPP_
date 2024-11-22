@@ -55,5 +55,10 @@ namespace CUPID_DATINGAPP
             StatusMessage.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green);
             StatusMessage.Visibility = Visibility.Visible;
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
