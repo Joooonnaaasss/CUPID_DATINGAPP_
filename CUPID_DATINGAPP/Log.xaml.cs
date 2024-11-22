@@ -131,7 +131,6 @@ namespace CUPID_DATINGAPP
                 MessageBox.Show($"Ein Fehler ist aufgetreten: {ex.Message}\nDetails: {ex.StackTrace}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private bool ValidateLogin(string username, string password)
         {
             try
@@ -182,7 +181,11 @@ namespace CUPID_DATINGAPP
 
         private void PasswordForget(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Bitte kontaktieren Sie den Support, um Ihr Passwort zurückzusetzen.", "Passwort vergessen", MessageBoxButton.OK, MessageBoxImage.Information);
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            mainWindow.SettingsFrame.Content = new PasswordR_Log_(); // Log ist die Login-Oberfläche
+
+            mainWindow.ShowFrame(mainWindow.SettingsFrame);
         }
     }
 }

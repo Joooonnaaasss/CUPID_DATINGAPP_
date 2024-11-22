@@ -59,6 +59,7 @@ namespace CUPID_DATINGAPP
                 Reg2.Visibility = Visibility.Collapsed;
                 Reg3.Visibility = Visibility.Collapsed;
             }
+
         }
 
 

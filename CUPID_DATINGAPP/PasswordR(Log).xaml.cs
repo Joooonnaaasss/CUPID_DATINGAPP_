@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Configuration;
-using MySqlConnector; // MySqlConnector-Paket erforderlich
+using MySqlConnector;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CUPID_DATINGAPP
 {
-    public partial class UserPasswordR : UserControl
+    public partial class PasswordR_Log_ : UserControl
     {
-        public UserPasswordR()
+        public PasswordR_Log_()
         {
             InitializeComponent();
         }
@@ -18,10 +18,7 @@ namespace CUPID_DATINGAPP
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            // Lade die Login-Seite in den LogFrame
-            mainWindow.SettingsFrame.Content = new UserSettings(); // Log ist die Login-Oberfläche
-
-            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame);
+            mainWindow.ShowFrame(mainWindow.LogFrame);
         }
 
         // Platzhalter-Logik für die E-Mail-Textbox

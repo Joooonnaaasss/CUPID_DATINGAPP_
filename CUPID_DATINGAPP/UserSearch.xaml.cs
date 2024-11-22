@@ -65,5 +65,10 @@ namespace CUPID_DATINGAPP
                 MessageBox.Show($"Fehler beim Laden der Matches: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

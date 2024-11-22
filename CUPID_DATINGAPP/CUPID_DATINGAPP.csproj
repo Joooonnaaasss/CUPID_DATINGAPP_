@@ -91,6 +91,9 @@
     <Compile Include="MainMenü.xaml.cs">
       <DependentUpon>MainMenü.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PasswordR%28Log%29.xaml.cs">
+      <DependentUpon>PasswordR%28Log%29.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PublicSearch.xaml.cs">
       <DependentUpon>PublicSearch.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PasswordR%28Log%29.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PublicSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

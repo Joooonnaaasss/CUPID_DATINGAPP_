@@ -101,6 +101,7 @@
                         <StackPanel>
                             <local:UserSettings />
                             <local:UserPasswordR />
+                            <local:PasswordR_Log_ />
                         </StackPanel>
                     </Frame.Content>
                 </Frame>

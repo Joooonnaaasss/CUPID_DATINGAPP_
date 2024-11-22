@@ -37,8 +37,18 @@ namespace CUPID_DATINGAPP
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            // RegistrierFrame sichtbar machen
+            mainWindow.RegistrierFrame.Visibility = Visibility.Visible;
+
+            // Inhalte setzen
             mainWindow.RegistrierFrame.Content = new Reg(registrationData);
+
+            // ShowFrame-Methode verwenden
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
+
+
+
         }
 
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
