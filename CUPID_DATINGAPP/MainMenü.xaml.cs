@@ -69,8 +69,11 @@ namespace CUPID_DATINGAPP
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            // Navigiere zum SearchFrame und zeige die UserSearch-Seite
-            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame); // Zeigt das SearchFrame an
+
+            // Lade die Login-Seite in den LogFrame
+            mainWindow.SettingsFrame.Content = new UserSettings(); // Log ist die Login-Oberfläche
+
+            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame);
         }
     }
 

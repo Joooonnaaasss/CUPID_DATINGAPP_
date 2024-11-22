@@ -51,8 +51,13 @@ namespace CUPID_DATINGAPP
         // Event-Handler für den Passwort wiederherstellen Button
         private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            // Logik für die Passwortwiederherstellung
-            MessageBox.Show("Anweisungen zur Passwortwiederherstellung wurden an Ihre E-Mail-Adresse gesendet.", "Passwort wiederherstellen", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            // Lade die Login-Seite in den LogFrame
+            mainWindow.SettingsFrame.Content = new UserPasswordR(); // Log ist die Login-Oberfläche
+
+            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame);
         }
     }
 }

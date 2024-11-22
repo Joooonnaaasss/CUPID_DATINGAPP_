@@ -98,9 +98,13 @@
 
                 <Frame x:Name="SettingsFrame" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>
-                        <local:UserSettings />
+                        <StackPanel>
+                            <local:UserSettings />
+                            <local:UserPasswordR />
+                        </StackPanel>
                     </Frame.Content>
                 </Frame>
+
 
                 <Frame x:Name="SearchFramePublic" Visibility="Collapsed" Margin="10,10,10,10" NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                     <Frame.Content>

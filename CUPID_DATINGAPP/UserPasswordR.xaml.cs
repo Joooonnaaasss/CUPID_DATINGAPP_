@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace CUPID_DATINGAPP
@@ -11,54 +10,79 @@ namespace CUPID_DATINGAPP
             InitializeComponent();
         }
 
-        // Email Placeholder
+        // Eventhandler für die E-Mail-Textbox
         private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            EmailPlaceholder.Visibility = string.IsNullOrWhiteSpace(EmailTextBox.Text)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            if (string.IsNullOrWhiteSpace(EmailTextBox.Text))
+            {
+                EmailPlaceholder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                EmailPlaceholder.Visibility = Visibility.Collapsed;
+            }
         }
 
-        // Date Placeholder
+        // Eventhandler für das Datum-Textbox
         private void DateTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DatePlaceholder.Visibility = string.IsNullOrWhiteSpace(DateTextBox.Text)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            if (string.IsNullOrWhiteSpace(DateTextBox.Text))
+            {
+                DatePlaceholder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DatePlaceholder.Visibility = Visibility.Collapsed;
+            }
         }
 
-        // Password Placeholder
+        // Eventhandler für die Passwort-Textbox
         private void PasswordTextBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordTextBox.Password)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            if (string.IsNullOrWhiteSpace(PasswordTextBox.Password))
+            {
+                PasswordPlaceholder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PasswordPlaceholder.Visibility = Visibility.Collapsed;
+            }
         }
 
-        // Reset Password Logic
+        // Schließen-Button
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Logik zum Schließen des Fensters oder der App
+        }
+
+        // Passwort zurücksetzen Button
         private void ResetPassword_Click(object sender, RoutedEventArgs e)
         {
-            string email = EmailTextBox.Text;
-            string date = DateTextBox.Text;
-            string password = PasswordTextBox.Password;
-
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(date) || string.IsNullOrWhiteSpace(password))
+            // Logik zum Zurücksetzen des Passworts
+            if (string.IsNullOrWhiteSpace(EmailTextBox.Text) ||
+                string.IsNullOrWhiteSpace(DateTextBox.Text) ||
+                string.IsNullOrWhiteSpace(PasswordTextBox.Password))
             {
                 StatusMessage.Text = "Bitte füllen Sie alle Felder aus.";
-                StatusMessage.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
                 StatusMessage.Visibility = Visibility.Visible;
-                return;
             }
+            else
+            {
+                StatusMessage.Text = "Passwort erfolgreich zurückgesetzt.";
+                StatusMessage.Visibility = Visibility.Visible;
 
-            // Hier die Passwort-Zurücksetzen-Logik implementieren
-            StatusMessage.Text = "Passwort erfolgreich zurückgesetzt!";
-            StatusMessage.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green);
-            StatusMessage.Visibility = Visibility.Visible;
+                // Weitere Logik hinzufügen, um das Passwort tatsächlich zurückzusetzen
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            // Lade die Login-Seite in den LogFrame
+            mainWindow.SettingsFrame.Content = new UserSettings(); // Log ist die Login-Oberfläche
 
+            mainWindow.ShowFramesWithoutHidingMenu(mainWindow.SettingsFrame);
         }
+
     }
 }
