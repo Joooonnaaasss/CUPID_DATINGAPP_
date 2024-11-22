@@ -1,54 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CUPID_DATINGAPP
 {
     public partial class UserSearch : UserControl
     {
-        private List<User> _users;
+        private ObservableCollection<PublicUser> Matches = new ObservableCollection<PublicUser>();
+        private string connectionString;
 
         public UserSearch()
         {
             InitializeComponent();
-            LoadUsers();
+
+            // Verbindungszeichenfolge aus App.config laden
+            connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+
+            // Setze die ItemSource der ListView
+            UserListView.ItemsSource = Matches;
+
+            // Lade Matches, wenn die Ansicht geöffnet wird
+            _ = LoadAllMatchesAsync();
         }
 
-        private void LoadUsers()
+        // Lade alle Matches aus der Datenbank
+        private async Task LoadAllMatchesAsync()
         {
-            _users = new List<User>
+            try
             {
-                new User { Username = "Benutzer 1", ProfileImage = "https://via.placeholder.com/40" },
-                new User { Username = "Benutzer 2", ProfileImage = "https://via.placeholder.com/40" },
-                new User { Username = "Benutzer 3", ProfileImage = "https://via.placeholder.com/40" },
-                new User { Username = "Benutzer 4", ProfileImage = "https://via.placeholder.com/40" },
-                new User { Username = "Benutzer 5", ProfileImage = "https://via.placeholder.com/40" },
-                new User { Username = "Benutzer 6", ProfileImage = "https://via.placeholder.com/40" },
-            };
-            UserListView.ItemsSource = _users;
-        }
+                Matches.Clear(); // Vorherige Einträge entfernen
 
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchTerm = SearchTextBox.Text.ToLower();
-            var filteredUsers = _users.Where(u => u.Username.ToLower().Contains(searchTerm)).ToList();
-            UserListView.ItemsSource = filteredUsers;
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    // SQL-Abfrage, um alle Matches zu laden
+                    string query = @"
+                        SELECT DISTINCT u.UserID, u.Username
+                        FROM users u
+                        INNER JOIN matches m ON u.UserID = m.User_Id_matches_1 OR u.UserID = m.User_Id_matches_2";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                Matches.Add(new PublicUser
+                                {
+                                    UserId = reader.GetInt32(reader.GetOrdinal("UserID")),
+                                    Username = reader.GetString(reader.GetOrdinal("Username"))
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Laden der Matches: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-    }
-    public class User
-    {
-        public string Username { get; set; }
-        public string ProfileImage { get; set; } // URL des Profilbildes
     }
 }
