@@ -1,70 +1,78 @@
 ﻿
 using System; // Grundlegende Funktionen wie Exception Handling und Datum/Zeit.
 using System.Windows; // WPF-Bibliothek für Fenster, Nachrichten und Benutzeroberfläche.
-using System.Windows.Controls; // Stellt WPF-Steuerelemente wie UserControl und TextBlock bereit.
+using System.Windows.Controls; // WPF-Steuerelemente wie UserControl und TextBlock.
 using MySql.Data.MySqlClient; // Bibliothek für den Zugriff auf MySQL-Datenbanken.
 
 namespace CUPID_DATINGAPP
 {
-    public partial class HomeWindow : UserControl // HomeWindow ist ein Benutzersteuerelement (Teil der GUI).
+    public partial class HomeWindow : UserControl
     {
-        // Verbindung zur Datenbank wird aus der Datei "app.config" geladen.
-        // Die Verbindung nutzt den Namen "MySqlConnection", wie in app.config definiert.
+        // Verbindung zur MySQL-Datenbank, definiert in der App-Konfiguration.
         private readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+
+        // ID des aktuell angezeigten Benutzers (für Matches und Drops).
+        private int currentDisplayedUserId = -1;
 
         public HomeWindow()
         {
-            InitializeComponent(); // Initialisiert die grafischen Komponenten (geladen aus XAML).
-            LoadUserProfile(); // Lädt ein Benutzerprofil aus der Datenbank, wenn die Ansicht geöffnet wird.
+            InitializeComponent(); // Initialisiert die grafischen Komponenten.
+            LoadUserProfile(); // Lädt ein Benutzerprofil beim Öffnen des Fensters.
         }
 
-        // Methode zum Laden eines Benutzerprofils aus der Datenbank
+        /// <summary>
+        /// Lädt ein Benutzerprofil aus der Datenbank.
+        /// Schließt Benutzer aus, die bereits geliked oder gedroppt wurden.
+        /// </summary>
         private void LoadUserProfile()
         {
             try
             {
-                // Erstellen einer neuen Verbindung zur MySQL-Datenbank mit der Verbindungszeichenfolge.
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    connection.Open(); // Öffnet die Verbindung zur Datenbank.
+                    connection.Open();
 
-                    // SQL-Abfrage, die zufällig einen Benutzer aus der Tabelle "users" auswählt.
-                    // Die Felder "FirstName", "Biography", "Hobbys", "Skills" und "DateOfBirth" werden abgerufen.
                     string query = @"
-                        SELECT FirstName, Biography, Hobbys, Skills, DateOfBirth 
-                        FROM users 
-                        ORDER BY RAND() LIMIT 1;";
+                SELECT UserID, FirstName, Biography, Hobbys, Skills, DateOfBirth 
+                FROM users 
+                WHERE UserID != @LoggedInUserId 
+                AND Gender = @TargetGender
+                AND UserID NOT IN (
+                    SELECT User_Id_matches_2 FROM matches WHERE User_Id_matches_1 = @LoggedInUserId
+                    UNION
+                    SELECT User_Id_drop_2 FROM drops WHERE User_Id_drop_1 = @LoggedInUserId
+                )
+                ORDER BY RAND() LIMIT 1;";
 
-                    // MySQL-Befehl mit der Abfrage und der bestehenden Verbindung.
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
-                        // Führt die Abfrage aus und speichert die Ergebnisse im MySqlDataReader.
+                        cmd.Parameters.AddWithValue("@LoggedInUserId", UserSync.CurrentUser.Instance.UserId);
+                        cmd.Parameters.AddWithValue("@TargetGender", DetermineTargetGender());
+
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            // Prüft, ob die Abfrage ein Ergebnis liefert.
                             if (reader.Read())
                             {
-                                // Setzt die Textblöcke in der Benutzeroberfläche mit den ausgelesenen Daten.
-                                TextBlockFirstName.Text = reader["FirstName"].ToString(); // Vorname des Benutzers.
-                                AboutMeText.Text = reader["Biography"].ToString(); // Kurzbeschreibung.
-                                HobbiesText.Text = reader["Hobbys"].ToString(); // Hobbys.
-                                SkillsText.Text = reader["Skills"].ToString(); // Fähigkeiten.
+                                // Benutzer gefunden: Fülle die UI
+                                currentDisplayedUserId = Convert.ToInt32(reader["UserID"]);
+                                TextBlockFirstName.Text = reader["FirstName"].ToString();
+                                AboutMeText.Text = reader["Biography"].ToString();
+                                HobbiesText.Text = reader["Hobbys"].ToString();
+                                SkillsText.Text = reader["Skills"].ToString();
 
-                                // Formatiert das Geburtsdatum und zeigt es an, falls es gültig ist.
                                 if (DateTime.TryParse(reader["DateOfBirth"].ToString(), out DateTime dateOfBirth))
                                 {
                                     TextBlockDateOfBirth.Text = $"Geburtsdatum: {dateOfBirth:dd.MM.yyyy}";
                                 }
                                 else
                                 {
-                                    // Falls das Geburtsdatum nicht gültig ist, wird "Unbekannt" angezeigt.
                                     TextBlockDateOfBirth.Text = "Geburtsdatum: Unbekannt";
                                 }
                             }
                             else
                             {
-                                // Zeigt eine Nachricht an, wenn keine Daten gefunden wurden.
-                                MessageBox.Show("Keine Benutzerdaten gefunden.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                                // Keine Benutzer gefunden
+                                ShowNoMoreUsersScreen();
                             }
                         }
                     }
@@ -72,23 +80,121 @@ namespace CUPID_DATINGAPP
             }
             catch (Exception ex)
             {
-                // Zeigt eine Fehlermeldung an, wenn ein Fehler beim Laden der Benutzerdaten auftritt.
                 MessageBox.Show($"Fehler beim Laden der Benutzerdaten: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Event-Handler für den "Gefällt mir"-Button
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+
+
+        private void ShowNoMoreUsersScreen()
         {
-            // Nach dem Klicken wird ein neuer Benutzer geladen.
-            LoadUserProfile();
+            // Zeige eine Nachricht an
+            MessageBox.Show("Es gibt momentan keine weiteren passenden Benutzer. Schau später noch einmal vorbei!", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Optional: Leere die Benutzeroberfläche oder zeige ein Bild/Animation
+            TextBlockFirstName.Text = "Keine weiteren Benutzer verfügbar";
+            AboutMeText.Text = "";
+            HobbiesText.Text = "";
+            SkillsText.Text = "";
+            TextBlockDateOfBirth.Text = "";
+
+            // Du kannst auch eine Animation oder ein Bild anzeigen, falls gewünscht
+            // Example: Show a placeholder image
+            // PlaceholderImage.Visibility = Visibility.Visible;
         }
 
-        // Event-Handler für den "Ablehnen"-Button
+
+        /// <summary>
+        /// Event-Handler für den "Gefällt mir"-Button.
+        /// Erstellt ein Match in der Datenbank.
+        /// </summary>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = @"
+                INSERT INTO matches (User_Id_matches_1, User_Id_matches_2) 
+                VALUES (@UserId1, @UserId2);";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@UserId1", UserSync.CurrentUser.Instance.UserId); // Eingeloggter Benutzer
+                        cmd.Parameters.AddWithValue("@UserId2", currentDisplayedUserId); // Angezeigter Benutzer
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Lade den nächsten Benutzer
+                    LoadUserProfile();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Erstellen eines Matches: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        /// <summary>
+        /// Event-Handler für den "Ablehnen"-Button.
+        /// Erstellt einen Eintrag in der Drops-Tabelle.
+        /// </summary>
+        /// <summary>
+        /// Event-Handler für den "Ablehnen"-Button.
+        /// Erstellt einen Eintrag in der Drops-Tabelle.
+        /// </summary>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // Nach dem Klicken wird ein neuer Benutzer geladen.
-            LoadUserProfile();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = @"
+                INSERT INTO drops (User_Id_drop_1, User_Id_drop_2) 
+                VALUES (@UserId1, @UserId2);";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@UserId1", UserSync.CurrentUser.Instance.UserId); // Eingeloggter Benutzer
+                        cmd.Parameters.AddWithValue("@UserId2", currentDisplayedUserId); // Angezeigter Benutzer
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Lade den nächsten Benutzer
+                    LoadUserProfile();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Droppen eines Benutzers: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Bestimmt das Zielgeschlecht basierend auf den Präferenzen des Benutzers.
+        /// </summary>
+        /// <returns>Das Zielgeschlecht als String.</returns>
+        private string DetermineTargetGender()
+        {
+            string targetAudience = UserSync.CurrentUser.Instance.TargetAudience;
+            string userGender = UserSync.CurrentUser.Instance.Gender;
+
+            if (targetAudience == "männlich")
+                return "männlich";
+            else if (targetAudience == "weiblich")
+                return "weiblich";
+            else
+                return userGender == "männlich" ? "weiblich" : "männlich"; // Standard: Zeige das andere Geschlecht
         }
     }
 }
