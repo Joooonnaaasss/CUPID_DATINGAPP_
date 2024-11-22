@@ -20,9 +20,9 @@
                 </LinearGradientBrush>
             </Border.Background>
             <StackPanel Margin="15">
-                
+
                 <TextBlock FontSize="24" FontWeight="Bold" 
-                           Margin="0,0,0,20" Foreground="#CD8C95"><Run Language="de-de" Text="Freundessuche" FontFamily="Georgia, serif"/></TextBlock>
+                           Margin="0,0,0,20" Foreground="#CD8C95" Text="Matches"/>
 
                 <!-- TextBox für die Benutzersuche -->
                 <Border Background="#F7F7F7" BorderBrush="#EEB4B4" 
@@ -43,12 +43,8 @@
                           SelectionMode="Single">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5" Background="Transparent">
-                                <Image Source="{Binding ProfileImage}" Width="40" Height="40" Margin="5" 
-                                       VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Username}" VerticalAlignment="Center" 
-                                           FontSize="16" Margin="5" Foreground="#333333"/>
-                            </StackPanel>
+                            <TextBlock Text="{Binding Username}" VerticalAlignment="Center" 
+                                       FontSize="16" Margin="5" Foreground="#333333"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
