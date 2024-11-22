@@ -1,4 +1,5 @@
-﻿using System; // Grundlegende Funktionen wie Exception Handling und Datum/Zeit.
+﻿
+using System; // Grundlegende Funktionen wie Exception Handling und Datum/Zeit.
 using System.Windows; // WPF-Bibliothek für Fenster, Nachrichten und Benutzeroberfläche.
 using System.Windows.Controls; // Stellt WPF-Steuerelemente wie UserControl und TextBlock bereit.
 using MySql.Data.MySqlClient; // Bibliothek für den Zugriff auf MySQL-Datenbanken.
