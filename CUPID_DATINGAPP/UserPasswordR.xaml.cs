@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CUPID_DATINGAPP
 {
-    /// <summary>
-    /// Interaction logic for UserPasswordR.xaml
-    /// </summary>
     public partial class UserPasswordR : UserControl
     {
         public UserPasswordR()
@@ -25,20 +11,49 @@ namespace CUPID_DATINGAPP
             InitializeComponent();
         }
 
-        // Methode zur Steuerung der Sichtbarkeit des Platzhalters
+        // Email Placeholder
         private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Zeigt den Platzhalter nur an, wenn das Textfeld leer ist
-            PlaceholderTextBlock.Visibility = string.IsNullOrEmpty(EmailTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+            EmailPlaceholder.Visibility = string.IsNullOrWhiteSpace(EmailTextBox.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
-        // Methode zur Behandlung des Klickereignisses
-        private void SendResetLink_Click(object sender, RoutedEventArgs e)
+        // Date Placeholder
+        private void DateTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Hier kann die Logik zum Senden des Zurücksetzungslinks hinzugefügt werden
-            StatusMessage.Text = "Link wurde gesendet!";
+            DatePlaceholder.Visibility = string.IsNullOrWhiteSpace(DateTextBox.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        // Password Placeholder
+        private void PasswordTextBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            PasswordPlaceholder.Visibility = string.IsNullOrWhiteSpace(PasswordTextBox.Password)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        // Reset Password Logic
+        private void ResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string email = EmailTextBox.Text;
+            string date = DateTextBox.Text;
+            string password = PasswordTextBox.Password;
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(date) || string.IsNullOrWhiteSpace(password))
+            {
+                StatusMessage.Text = "Bitte füllen Sie alle Felder aus.";
+                StatusMessage.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                StatusMessage.Visibility = Visibility.Visible;
+                return;
+            }
+
+            // Hier die Passwort-Zurücksetzen-Logik implementieren
+            StatusMessage.Text = "Passwort erfolgreich zurückgesetzt!";
+            StatusMessage.Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Green);
             StatusMessage.Visibility = Visibility.Visible;
         }
-
     }
 }
