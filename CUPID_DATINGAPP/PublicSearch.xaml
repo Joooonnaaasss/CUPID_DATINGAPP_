@@ -12,7 +12,13 @@
 
         <!-- Seitenmenü -->
         <Border Grid.Column="0" Margin="10,10,10,10" CornerRadius="15" 
-                BorderBrush="#EEB4B4" BorderThickness="1" Background="White">
+                BorderBrush="#EEB4B4" BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#EEB4B4" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel Margin="15">
                 <TextBlock Text="Benutzersuche" FontSize="24" FontWeight="Bold" 
                            Margin="0,0,0,20" Foreground="#EEB4B4"/>
@@ -23,7 +29,7 @@
                              TextChanged="SearchTextBox_TextChanged" 
                              Padding="10" 
                              FontSize="14" 
-                             Foreground="#EEB4B4" AutomationProperties.IsColumnHeader="True" UndoLimit="94" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                             Foreground="#EEB4B4" AutomationProperties.IsColumnHeader="True" UndoLimit="94" Background="{x:Null}"/>
                 </Border>
 
                 <!-- ListView zur Anzeige der Benutzer -->
@@ -45,7 +51,5 @@
                 </ListView>
             </StackPanel>
         </Border>
-
-        <!-- Bereich für weiteren Inhalt -->
     </Grid>
 </UserControl>

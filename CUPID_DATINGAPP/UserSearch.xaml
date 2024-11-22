@@ -32,7 +32,7 @@
                              Padding="10" 
                              FontFamily="Georgia, serif"
                              FontSize="14" 
-                             Foreground="#333333"/>
+                             Foreground="#333333" Background="{x:Null}" BorderBrush="{x:Null}"/>
                 </Border>
 
                 <!-- ListView zur Anzeige der Benutzer -->
