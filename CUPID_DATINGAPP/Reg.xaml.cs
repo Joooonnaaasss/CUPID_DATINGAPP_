@@ -26,34 +26,26 @@ namespace CUPID_DATINGAPP
         // Event-Handler: Vorname speichern
         private void VornameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            registrationData["FirstName"] = VornameTextBox.Text.Trim();
         }
 
         // Event-Handler: Nachname speichern
         private void NachnameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            registrationData["LastName"] = NachnameTextBox.Text.Trim();
         }
 
         // Event-Handler: E-Mail speichern
         private void MailTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            registrationData["Email"] = MailTextBox.Text.Trim();
         }
 
         // Event-Handler: Geburtsdatum speichern
         private void DateOfBirthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            registrationData["DateOfBirth"] = DateOfBirthTextBox.Text.Trim();
         }
 
         // Event-Handler: Geschlecht speichern
         private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (GenderComboBox.SelectedItem is ComboBoxItem selectedItem)
-            {
-                registrationData["Gender"] = selectedItem.Content.ToString();
-            }
         }
 
         // Weiterleitung zu Reg2
@@ -61,6 +53,11 @@ namespace CUPID_DATINGAPP
         {
             if (ValidateInputs())
             {
+                registrationData["FirstName"] = VornameTextBox.Text.Trim();
+                registrationData["LastName"] = NachnameTextBox.Text.Trim();
+                registrationData["Email"] = MailTextBox.Text.Trim();
+                registrationData["DateOfBirth"] = DateOfBirthTextBox.Text.Trim();
+                registrationData["Gender"] = GenderComboBox.Text.Trim();
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
                 // Lade Reg2 in den RegistrierFrame
