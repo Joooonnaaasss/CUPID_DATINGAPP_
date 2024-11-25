@@ -187,5 +187,10 @@ namespace CUPID_DATINGAPP
 
             mainWindow.ShowFrame(mainWindow.SettingsFrame);
         }
+
+        private void UserTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

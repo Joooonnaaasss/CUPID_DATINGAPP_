@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Configuration;
+using System.Windows.Media;
 
 namespace CUPID_DATINGAPP
 {
@@ -129,12 +130,58 @@ namespace CUPID_DATINGAPP
             return true;
         }
 
-        // TextChanged-Handler für die HobbysTextBox (falls benötigt)
-        private void HobbysTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void HobbysTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Optional: Textänderungen loggen
-            var textBox = sender as TextBox;
-            Console.WriteLine($"Hobbys Text geändert: {textBox?.Text}");
+            if (HobbysTextBox.Text == "Hobbys")
+            {
+                HobbysTextBox.Text = "";
+                HobbysTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void HobbysTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(HobbysTextBox.Text))
+            {
+                HobbysTextBox.Text = "Hobbys";
+                HobbysTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void SkillsTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SkillsTextBox.Text == "Fähigkeiten (Skills)")
+            {
+                SkillsTextBox.Text = "";
+                SkillsTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void SkillsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SkillsTextBox.Text))
+            {
+                SkillsTextBox.Text = "Fähigkeiten (Skills)";
+                SkillsTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void BiographyTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (BiographyTextBox.Text == "Biografie")
+            {
+                BiographyTextBox.Text = "";
+                BiographyTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void BiographyTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(BiographyTextBox.Text))
+            {
+                BiographyTextBox.Text = "Biografie";
+                BiographyTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
         }
     }
 }

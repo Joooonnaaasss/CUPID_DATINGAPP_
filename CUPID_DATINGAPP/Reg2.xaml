@@ -19,32 +19,39 @@
                              Padding="10" 
                              FontFamily="Georgia, serif" 
                              FontSize="14" 
-                             Foreground="#333333" 
+                             Foreground="#999999" 
                              BorderThickness="0" 
-                             VerticalContentAlignment="Center"/>
+                             VerticalContentAlignment="Center"
+                             GotFocus="UsernameTextBox_GotFocus"
+                             LostFocus="UsernameTextBox_LostFocus"
+                             Background="{x:Null}" BorderBrush="{x:Null}" TextChanged="UsernameTextBox_TextChanged"/>
                 </Border>
 
                 <!-- Password Input Box -->
                 <Border CornerRadius="8" Width="250" Height="40" Margin="0,5,0,5" BorderBrush="#EEB4B4" BorderThickness="1">
-                    <PasswordBox x:Name="PasswordBox" 
-                                 PasswordChar="*" 
+                    <TextBox x:Name="PasswordBox"
+                                 Text="Password" 
                                  Padding="10" 
                                  FontFamily="Georgia, serif" 
                                  FontSize="14" 
-                                 Foreground="#333333" 
+                                 Foreground="#999999" 
                                  BorderThickness="0" 
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center"
+                                 GotFocus="PasswordBox_GotFocus"
+                                 LostFocus="PasswordBox_LostFocus"
+                                 Background="{x:Null}" BorderBrush="{x:Null}" TextChanged="PasswordBox_TextChanged"/>
                 </Border>
 
                 <!-- Zielgruppe ComboBox -->
                 <Border CornerRadius="8" Width="250" Height="40" Margin="0,5,0,5" BorderBrush="#EEB4B4" BorderThickness="1">
-                    <ComboBox x:Name="TargetAudienceComboBox" 
+                    <ComboBox x:Name="TargetAudienceComboBox"
                               Padding="10" 
                               FontFamily="Georgia, serif" 
                               FontSize="14" 
                               Foreground="#333333" 
                               BorderThickness="0"
-                              VerticalContentAlignment="Center">
+                              VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+
                         <ComboBoxItem Content="Männlich"/>
                         <ComboBoxItem Content="Weiblich"/>
                         <ComboBoxItem Content="Divers"/>

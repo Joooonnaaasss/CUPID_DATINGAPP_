@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CUPID_DATINGAPP
 {
     public partial class Reg : UserControl
     {
         private Dictionary<string, string> registrationData = new Dictionary<string, string>();
-
 
         public Reg()
         {
@@ -22,22 +22,6 @@ namespace CUPID_DATINGAPP
             registrationData = data;
         }
 
-
-        // Event-Handler: Vorname speichern
-        private void VornameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
-        // Event-Handler: Nachname speichern
-        private void NachnameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
-        // Event-Handler: E-Mail speichern
-        private void MailTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         // Event-Handler: Geburtsdatum speichern
         private void DateOfBirthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -48,7 +32,7 @@ namespace CUPID_DATINGAPP
         {
         }
 
-        // Weiterleitung zu Reg2
+        // Event-Handler: Geburtsdatum speichern
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateInputs())
@@ -56,7 +40,11 @@ namespace CUPID_DATINGAPP
                 registrationData["FirstName"] = VornameTextBox.Text.Trim();
                 registrationData["LastName"] = NachnameTextBox.Text.Trim();
                 registrationData["Email"] = MailTextBox.Text.Trim();
-                registrationData["DateOfBirth"] = DateOfBirthTextBox.Text.Trim();
+
+                // Konvertiere das Geburtsdatum ins MySQL-kompatible Format
+                DateTime dateOfBirth = (DateTime)DateOfBirthTextBox.SelectedDate;
+                registrationData["DateOfBirth"] = dateOfBirth.ToString("yyyy-MM-dd"); // MySQL-Formatierung
+
                 registrationData["Gender"] = GenderComboBox.Text.Trim();
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
@@ -83,24 +71,29 @@ namespace CUPID_DATINGAPP
         // Eingabevalidierung
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(VornameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(VornameTextBox.Text) || VornameTextBox.Text == "Vorname")
             {
                 MessageBox.Show("Bitte geben Sie Ihren Vornamen ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(NachnameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(NachnameTextBox.Text) || NachnameTextBox.Text == "Nachname")
             {
                 MessageBox.Show("Bitte geben Sie Ihren Nachnamen ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(MailTextBox.Text) || !IsValidEmail(MailTextBox.Text))
+            if (string.IsNullOrWhiteSpace(MailTextBox.Text) || MailTextBox.Text == "E-Mail" || !IsValidEmail(MailTextBox.Text))
             {
                 MessageBox.Show("Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(DateOfBirthTextBox.Text) || !DateTime.TryParse(DateOfBirthTextBox.Text, out _))
+            if (DateOfBirthTextBox.SelectedDate == null)
             {
                 MessageBox.Show("Bitte geben Sie ein gültiges Geburtsdatum ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!IsAtLeast18YearsOld((DateTime)DateOfBirthTextBox.SelectedDate))
+            {
+                MessageBox.Show("Sie müssen mindestens 18 Jahre alt sein, um sich zu registrieren.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             if (GenderComboBox.SelectedItem == null)
@@ -110,6 +103,14 @@ namespace CUPID_DATINGAPP
             }
 
             return true;
+        }
+
+        private bool IsAtLeast18YearsOld(DateTime birthDate)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+            if (birthDate > today.AddYears(-age)) age--;
+            return age >= 18;
         }
 
         private bool IsValidEmail(string email)
@@ -123,7 +124,74 @@ namespace CUPID_DATINGAPP
             {
                 return false;
             }
+        }
 
+        private void VornameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (VornameTextBox.Text == "Vorname")
+            {
+                VornameTextBox.Text = "";
+                VornameTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void VornameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(VornameTextBox.Text))
+            {
+                VornameTextBox.Text = "Vorname";
+                VornameTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void NachnameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (NachnameTextBox.Text == "Nachname")
+            {
+                NachnameTextBox.Text = "";
+                NachnameTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void NachnameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(NachnameTextBox.Text))
+            {
+                NachnameTextBox.Text = "Nachname";
+                NachnameTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void MailTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (MailTextBox.Text == "E-Mail")
+            {
+                MailTextBox.Text = "";
+                MailTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void MailTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(MailTextBox.Text))
+            {
+                MailTextBox.Text = "E-Mail";
+                MailTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void VornameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void NachnameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void MailTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
     }

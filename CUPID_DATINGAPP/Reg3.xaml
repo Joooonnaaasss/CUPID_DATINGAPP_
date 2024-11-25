@@ -17,12 +17,14 @@
                              Padding="10,8" 
                              FontFamily="Georgia, serif"
                              FontSize="13" 
-                             Foreground="#3A3A3C" 
-                             Background="White" 
-                             BorderBrush="#D1D1D6"
+                             Foreground="#999999" 
+                             Background="{x:Null}" 
+                             BorderBrush="{x:Null}"
                              BorderThickness="1" 
                              AcceptsReturn="True" 
-                             VerticalScrollBarVisibility="Auto"/>
+                             VerticalScrollBarVisibility="Auto"
+                             GotFocus="HobbysTextBox_GotFocus"
+                             LostFocus="HobbysTextBox_LostFocus"/>
                 </Border>
 
                 <!-- Skills Input Box -->
@@ -32,12 +34,14 @@
                              Padding="10,8" 
                              FontFamily="Georgia, serif" 
                              FontSize="13" 
-                             Foreground="#3A3A3C" 
-                             Background="White" 
-                             BorderBrush="#D1D1D6"
+                             Foreground="#999999" 
+                             Background="{x:Null}" 
+                             BorderBrush="{x:Null}"
                              BorderThickness="1" 
                              AcceptsReturn="True" 
-                             VerticalScrollBarVisibility="Auto"/>
+                             VerticalScrollBarVisibility="Auto"
+                             GotFocus="SkillsTextBox_GotFocus"
+                             LostFocus="SkillsTextBox_LostFocus"/>
                 </Border>
 
                 <!-- Biography Input Box -->
@@ -47,13 +51,15 @@
                              Padding="10,8" 
                              FontFamily="Georgia, serif" 
                              FontSize="13" 
-                             Foreground="#3A3A3C" 
-                             Background="White" 
-                             BorderBrush="#D1D1D6"
+                             Foreground="#999999" 
+                             Background="{x:Null}" 
+                             BorderBrush="{x:Null}"
                              BorderThickness="1" 
                              AcceptsReturn="True" 
                              VerticalScrollBarVisibility="Auto" 
-                             MaxLength="200"/>
+                             MaxLength="200"
+                             GotFocus="BiographyTextBox_GotFocus"
+                             LostFocus="BiographyTextBox_LostFocus"/>
                 </Border>
 
                 <!-- Hinweistext unter Biografie-Box -->
@@ -89,7 +95,7 @@
                             Click="BackButton_Click" 
                             VerticalAlignment="Center"/>
                 </Border>
-                
+
             </StackPanel>
         </Border>
     </Grid>

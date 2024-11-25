@@ -15,27 +15,31 @@
                 <!-- Vorname Input Box -->
                 <Border CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#EEB4B4" BorderThickness="1">
                     <TextBox x:Name="VornameTextBox" 
-                             Text="First name" 
+                             Text="Vorname" 
                              Padding="10" 
                              FontFamily="Georgia, serif"
                              FontSize="14" 
-                             Foreground="#333333" 
+                             Foreground="#999999" 
                              BorderThickness="0" 
-                             VerticalContentAlignment="Center" 
-                             TextChanged="VornameTextBox_TextChanged"/>
+                             VerticalContentAlignment="Center"
+                             GotFocus="VornameTextBox_GotFocus"
+                             LostFocus="VornameTextBox_LostFocus"
+                             TextChanged="VornameTextBox_TextChanged" Background="{x:Null}" BorderBrush="{x:Null}"/>
                 </Border>
 
                 <!-- Nachname Input Box -->
                 <Border CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#EEB4B4" BorderThickness="1">
                     <TextBox x:Name="NachnameTextBox" 
-                             Text="Surname" 
+                             Text="Nachname" 
                              Padding="10" 
                              FontFamily="Georgia, serif"
                              FontSize="14" 
-                             Foreground="#333333" 
+                             Foreground="#999999" 
                              BorderThickness="0" 
-                             VerticalContentAlignment="Center" 
-                             TextChanged="NachnameTextBox_TextChanged"/>
+                             VerticalContentAlignment="Center"
+                             GotFocus="NachnameTextBox_GotFocus"
+                             LostFocus="NachnameTextBox_LostFocus"
+                             TextChanged="NachnameTextBox_TextChanged" Background="{x:Null}" BorderBrush="{x:Null}"/>
                 </Border>
 
                 <!-- E-Mail Input Box -->
@@ -45,22 +49,23 @@
                              Padding="10" 
                              FontFamily="Georgia, serif"
                              FontSize="14" 
-                             Foreground="#333333" 
+                             Foreground="#999999" 
                              BorderThickness="0" 
-                             VerticalContentAlignment="Center" 
-                             TextChanged="MailTextBox_TextChanged"/>
+                             VerticalContentAlignment="Center"
+                             GotFocus="MailTextBox_GotFocus"
+                             LostFocus="MailTextBox_LostFocus"
+                             TextChanged="MailTextBox_TextChanged" BorderBrush="{x:Null}" Background="{x:Null}"/>
                 </Border>
 
                 <!-- Date of Birth Input Box -->
                 <Border CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#EEB4B4" BorderThickness="1">
-                    <TextBox x:Name="DateOfBirthTextBox" 
-                             Text="Geburtsdatum (DD/MM/YYYY)" 
-                             Padding="10" 
-                             FontFamily="Georgia, serif"
-                             FontSize="14" 
-                             Foreground="#333333" 
-                             BorderThickness="0" 
-                             VerticalContentAlignment="Center"/>
+                    <DatePicker x:Name="DateOfBirthTextBox" 
+                                Padding="10" 
+                                FontFamily="Georgia, serif"
+                                FontSize="14" 
+                                Foreground="#333333" 
+                                BorderThickness="0" 
+                                VerticalContentAlignment="Center"/>
                 </Border>
 
                 <!-- Gender ComboBox -->
@@ -70,7 +75,7 @@
                               FontSize="14" 
                               Foreground="#333333" 
                               BorderThickness="0" 
-                              VerticalContentAlignment="Center">
+                              VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                         <ComboBoxItem Content="Männlich"  FontFamily="Georgia, serif"/>
                         <ComboBoxItem Content="Weiblich"  FontFamily="Georgia, serif"/>
                         <ComboBoxItem Content="Divers"  FontFamily="Georgia, serif"/>

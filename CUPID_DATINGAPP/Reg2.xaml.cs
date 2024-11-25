@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CUPID_DATINGAPP
 {
@@ -25,7 +26,7 @@ namespace CUPID_DATINGAPP
             if (ValidateInputs())
             {
                 registrationData["Username"] = UsernameTextBox.Text.Trim();
-                registrationData["Password"] = PasswordBox.Password.Trim();
+                registrationData["Password"] = PasswordBox.Text.Trim();
                 registrationData["TargetAudience"] = ((ComboBoxItem)TargetAudienceComboBox.SelectedItem).Content.ToString();
 
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -46,9 +47,6 @@ namespace CUPID_DATINGAPP
 
             // ShowFrame-Methode verwenden
             mainWindow.ShowFrame(mainWindow.RegistrierFrame);
-
-
-
         }
 
         private void UploadPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -73,7 +71,7 @@ namespace CUPID_DATINGAPP
 
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text) || UsernameTextBox.Text == "Benutzername")
             {
                 MessageBox.Show("Bitte geben Sie einen Benutzernamen ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
@@ -83,13 +81,59 @@ namespace CUPID_DATINGAPP
                 MessageBox.Show("Bitte wählen Sie eine Zielgruppe aus.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(PasswordBox.Password)) // Geändert: Validierung für Passwort
+            if (string.IsNullOrWhiteSpace(PasswordBox.Text) || PasswordBox.Text == "Password")
             {
                 MessageBox.Show("Bitte geben Sie ein Passwort ein.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
 
             return true;
+        }
+
+        private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (UsernameTextBox.Text == "Benutzername")
+            {
+                UsernameTextBox.Text = "";
+                UsernameTextBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void UsernameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
+            {
+                UsernameTextBox.Text = "Benutzername";
+                UsernameTextBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (PasswordBox.Text == "Password")
+            {
+                PasswordBox.Text = "";
+                PasswordBox.Foreground = new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(PasswordBox.Text))
+            {
+                PasswordBox.Text = "Password";
+                PasswordBox.Foreground = new SolidColorBrush(Color.FromRgb(153, 153, 153));
+            }
+        }
+
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void PasswordBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -24,9 +24,8 @@
                             </Grid.RowDefinitions>
 
                             <!-- Profilbild -->
-                            <Border Height="130" CornerRadius="10" Background="#EEB4B4"
-                                    VerticalAlignment="Top" Margin="10,70,360,0" Grid.RowSpan="2">
-                                <!-- Profilbild könnte hier eingefügt werden -->
+                            <Border Height="130" CornerRadius="10" Background="#EEB4B4" VerticalAlignment="Top" Margin="10,70,360,0" Grid.RowSpan="2">
+                                <Image x:Name="ProfilePhotoImage" Stretch="UniformToFill"/>
                             </Border>
 
                             <!-- Profilinformationen -->
@@ -44,13 +43,19 @@
 
                             <!-- Buttons -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" Grid.Row="1">
-                                <Button Width="45" Height="45" Background="Transparent" Foreground="White" FontSize="30"
-                                        BorderBrush="Transparent" Cursor="Hand" Margin="5,0" Click="Button_Click">
-                                    <Image Height="32" Source="/Pictures/favourite.png" Stretch="Fill" Width="32"/>
+                                <Button Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Margin="10,0" Click="OnLikeButtonClick">
+                                    <Rectangle Width="45" Height="45" Fill="#FFFFACBA" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="/Pictures/Herz.png" Stretch="Uniform"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
                                 </Button>
-                                <Button Width="45" Height="45" Background="Transparent" Foreground="White" FontSize="20" 
-                                        BorderBrush="Transparent" Cursor="Hand" Click="Button_Click_1">
-                                    <Image Height="32" Source="/Pictures/delete.png" Stretch="Fill" Width="32"/>
+                                <Button Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Margin="10,0" Click="OnDislikeButtonClick">
+                                    <Rectangle Width="50" Height="50" Fill="#FFFF879C">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="/Pictures/loschen.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
                                 </Button>
                             </StackPanel>
                         </Grid>

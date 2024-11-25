@@ -25,7 +25,7 @@
              VerticalContentAlignment="Center" 
              GotFocus="UserTextBox_GotFocus" 
              LostFocus="UserTextBox_LostFocus" 
-             Background="{x:Null}" />
+             Background="{x:Null}" TextChanged="UserTextBox_TextChanged" />
                 </Border>
 
                 <Border Background="#F7F7F7" CornerRadius="8" Width="200" Height="40" Margin="0,5,0,5" BorderBrush="#E0E0E0" BorderThickness="1">

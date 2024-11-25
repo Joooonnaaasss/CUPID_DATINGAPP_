@@ -22,12 +22,6 @@
         <!-- Main grid with background and two columns for menu and main content -->
         <Grid Width="900" Height="450">
             <!-- Background with gradient over the entire grid -->
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="Pink" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>
 
             <!-- Columns for dynamic layout -->
             <Grid.ColumnDefinitions>
@@ -52,7 +46,7 @@
             </Frame>
 
             <!-- Main content in the right column -->
-            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+            <Grid Grid.Column="1" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="139*"/>
                     <RowDefinition Height="311*"/>

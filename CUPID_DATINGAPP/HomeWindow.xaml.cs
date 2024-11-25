@@ -1,8 +1,9 @@
-﻿
-using System; // Grundlegende Funktionen wie Exception Handling und Datum/Zeit.
+﻿using System; // Grundlegende Funktionen wie Exception Handling und Datum/Zeit.
 using System.Windows; // WPF-Bibliothek für Fenster, Nachrichten und Benutzeroberfläche.
 using System.Windows.Controls; // WPF-Steuerelemente wie UserControl und TextBlock.
+using System.Windows.Media.Imaging; // Bibliothek für die Umwandlung von Bitmaps in Images.
 using MySql.Data.MySqlClient; // Bibliothek für den Zugriff auf MySQL-Datenbanken.
+using System.IO; // Für die Umwandlung von Bytearray in Stream.
 
 namespace CUPID_DATINGAPP
 {
@@ -22,7 +23,7 @@ namespace CUPID_DATINGAPP
 
         /// <summary>
         /// Lädt ein Benutzerprofil aus der Datenbank.
-        /// Schließt Benutzer aus, die bereits geliked oder gedroppt wurden.
+        /// Schliesst Benutzer aus, die bereits geliked oder gedroppt wurden.
         /// </summary>
         private void LoadUserProfile()
         {
@@ -33,16 +34,16 @@ namespace CUPID_DATINGAPP
                     connection.Open();
 
                     string query = @"
-                SELECT UserID, FirstName, Biography, Hobbys, Skills, DateOfBirth 
-                FROM users 
-                WHERE UserID != @LoggedInUserId 
-                AND Gender = @TargetGender
-                AND UserID NOT IN (
-                    SELECT User_Id_matches_2 FROM matches WHERE User_Id_matches_1 = @LoggedInUserId
-                    UNION
-                    SELECT User_Id_drop_2 FROM drops WHERE User_Id_drop_1 = @LoggedInUserId
-                )
-                ORDER BY RAND() LIMIT 1;";
+                    SELECT UserID, FirstName, Biography, Hobbys, Skills, DateOfBirth, profile_photo
+                    FROM users 
+                    WHERE UserID != @LoggedInUserId 
+                    AND Gender = @TargetGender
+                    AND UserID NOT IN (
+                        SELECT User_Id_matches_2 FROM matches WHERE User_Id_matches_1 = @LoggedInUserId
+                        UNION
+                        SELECT User_Id_drop_2 FROM drops WHERE User_Id_drop_1 = @LoggedInUserId
+                    )
+                    ORDER BY RAND() LIMIT 1;";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -55,18 +56,45 @@ namespace CUPID_DATINGAPP
                             {
                                 // Benutzer gefunden: Fülle die UI
                                 currentDisplayedUserId = Convert.ToInt32(reader["UserID"]);
-                                TextBlockFirstName.Text = reader["FirstName"].ToString();
-                                AboutMeText.Text = reader["Biography"].ToString();
-                                HobbiesText.Text = reader["Hobbys"].ToString();
-                                SkillsText.Text = reader["Skills"].ToString();
-
                                 if (DateTime.TryParse(reader["DateOfBirth"].ToString(), out DateTime dateOfBirth))
                                 {
+                                    int age = CalculateAge(dateOfBirth);
+                                    TextBlockFirstName.Text = $"{reader["FirstName"]}, {age}";
                                     TextBlockDateOfBirth.Text = $"Geburtsdatum: {dateOfBirth:dd.MM.yyyy}";
                                 }
                                 else
                                 {
+                                    TextBlockFirstName.Text = reader["FirstName"].ToString();
                                     TextBlockDateOfBirth.Text = "Geburtsdatum: Unbekannt";
+                                }
+                                AboutMeText.Text = reader["Biography"].ToString();
+                                HobbiesText.Text = reader["Hobbys"].ToString();
+                                SkillsText.Text = reader["Skills"].ToString();
+
+                                // Profilbild laden
+                                if (!reader.IsDBNull(reader.GetOrdinal("profile_photo")))
+                                {
+                                    byte[] imageBytes = (byte[])reader["profile_photo"];
+                                    if (imageBytes != null && imageBytes.Length > 0)
+                                    {
+                                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                                        {
+                                            ms.Position = 0; // Setze den Stream-Zeiger auf den Anfang
+                                            BitmapImage bitmap = new BitmapImage();
+                                            bitmap.BeginInit();
+                                            bitmap.StreamSource = ms;
+                                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                                            bitmap.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                                            bitmap.EndInit();
+                                            bitmap.Freeze(); // Wichtig, um das BitmapImage für den UI-Thread zu sichern
+                                            ProfilePhotoImage.Source = bitmap;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Setze ein Standardbild, falls kein Profilbild vorhanden ist
+                                    ProfilePhotoImage.Source = new BitmapImage(new Uri("pack://application:,,,/CUPID_DATINGAPP;component/Pictures/profil.png"));
                                 }
                             }
                             else
@@ -84,8 +112,18 @@ namespace CUPID_DATINGAPP
             }
         }
 
-
-
+        /// <summary>
+        /// Berechnet das Alter basierend auf dem Geburtsdatum.
+        /// </summary>
+        /// <param name="birthDate">Das Geburtsdatum des Benutzers.</param>
+        /// <returns>Das Alter in Jahren.</returns>
+        private int CalculateAge(DateTime birthDate)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+            if (birthDate.Date > today.AddYears(-age)) age--;
+            return age;
+        }
 
         private void ShowNoMoreUsersScreen()
         {
@@ -98,18 +136,14 @@ namespace CUPID_DATINGAPP
             HobbiesText.Text = "";
             SkillsText.Text = "";
             TextBlockDateOfBirth.Text = "";
-
-            // Du kannst auch eine Animation oder ein Bild anzeigen, falls gewünscht
-            // Example: Show a placeholder image
-            // PlaceholderImage.Visibility = Visibility.Visible;
+            ProfilePhotoImage.Source = null; // Setze das Profilbild zurück oder zeige ein Platzhalterbild an
         }
-
 
         /// <summary>
         /// Event-Handler für den "Gefällt mir"-Button.
         /// Erstellt ein Match in der Datenbank.
         /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnLikeButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -118,8 +152,8 @@ namespace CUPID_DATINGAPP
                     connection.Open();
 
                     string query = @"
-                INSERT INTO matches (User_Id_matches_1, User_Id_matches_2) 
-                VALUES (@UserId1, @UserId2);";
+                    INSERT INTO matches (User_Id_matches_1, User_Id_matches_2) 
+                    VALUES (@UserId1, @UserId2);";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -139,16 +173,11 @@ namespace CUPID_DATINGAPP
             }
         }
 
-
         /// <summary>
         /// Event-Handler für den "Ablehnen"-Button.
         /// Erstellt einen Eintrag in der Drops-Tabelle.
         /// </summary>
-        /// <summary>
-        /// Event-Handler für den "Ablehnen"-Button.
-        /// Erstellt einen Eintrag in der Drops-Tabelle.
-        /// </summary>
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void OnDislikeButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -157,8 +186,8 @@ namespace CUPID_DATINGAPP
                     connection.Open();
 
                     string query = @"
-                INSERT INTO drops (User_Id_drop_1, User_Id_drop_2) 
-                VALUES (@UserId1, @UserId2);";
+                    INSERT INTO drops (User_Id_drop_1, User_Id_drop_2) 
+                    VALUES (@UserId1, @UserId2);";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -177,8 +206,6 @@ namespace CUPID_DATINGAPP
                 MessageBox.Show($"Fehler beim Droppen eines Benutzers: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
 
         /// <summary>
         /// Bestimmt das Zielgeschlecht basierend auf den Präferenzen des Benutzers.

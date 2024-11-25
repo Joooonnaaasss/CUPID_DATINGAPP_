@@ -219,6 +219,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Pictures\loschen.png" />
+    <Resource Include="Pictures\Herz.png" />
+    <Resource Include="Pictures\profil.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Pictures\cross-mark-on-a-black-circle-background.png" />
     <Resource Include="Pictures\user-edit %281%29.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -265,7 +270,7 @@
     <Resource Include="Pictures\delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="love %282%29.png" />
+    <Resource Include="Pictures\love %282%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\favourite.png" />
